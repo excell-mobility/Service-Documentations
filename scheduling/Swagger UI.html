@@ -1,0 +1,3526 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <title>Swagger UI</title>
+  <link rel="icon" type="image/png" href="http://141.64.5.234/excell-scheduling-api/images/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="http://141.64.5.234/excell-scheduling-api/images/favicon-16x16.png" sizes="16x16">
+  <link href="Swagger%20UI-Dateien/typography.css" media="screen" rel="stylesheet" type="text/css">
+  <link href="Swagger%20UI-Dateien/reset.css" media="screen" rel="stylesheet" type="text/css">
+  <link href="Swagger%20UI-Dateien/screen.css" media="screen" rel="stylesheet" type="text/css">
+  <link href="Swagger%20UI-Dateien/reset.css" media="print" rel="stylesheet" type="text/css">
+  <link href="Swagger%20UI-Dateien/print.css" media="print" rel="stylesheet" type="text/css">
+  <script src="Swagger%20UI-Dateien/jquery-1.js" type="text/javascript"></script>
+  <script src="Swagger%20UI-Dateien/jquery.js" type="text/javascript"></script>
+  <script src="Swagger%20UI-Dateien/jquery_003.js" type="text/javascript"></script>
+  <script src="Swagger%20UI-Dateien/jquery_002.js" type="text/javascript"></script>
+  <script src="Swagger%20UI-Dateien/handlebars-2.js" type="text/javascript"></script>
+  <script src="Swagger%20UI-Dateien/underscore-min.js" type="text/javascript"></script>
+  <script src="Swagger%20UI-Dateien/backbone-min.js" type="text/javascript"></script>
+  <script src="Swagger%20UI-Dateien/swagger-ui.js" type="text/javascript"></script>
+  <script src="Swagger%20UI-Dateien/highlight.js" type="text/javascript"></script>
+  <script src="Swagger%20UI-Dateien/marked.js" type="text/javascript"></script>
+  <script src="Swagger%20UI-Dateien/swagger-oauth.js" type="text/javascript"></script>
+
+  <script src="Swagger%20UI-Dateien/springfox.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(function() {
+
+      window.springfox.uiConfig(function(data) {
+        window.swaggerUi = new SwaggerUi({
+          dom_id: "swagger-ui-container",
+          validatorUrl: data.validatorUrl,
+          supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
+          onComplete: function(swaggerApi, swaggerUi) {
+
+            initializeSpringfox();
+
+            if (window.SwaggerTranslator) {
+              window.SwaggerTranslator.translate();
+            }
+
+            $('pre code').each(function(i, e) {
+              hljs.highlightBlock(e)
+            });
+
+          },
+          onFailure: function(data) {
+            log("Unable to Load SwaggerUI");
+          },
+          docExpansion: "none",
+          apisSorter: "alpha",
+          showRequestHeaders: false
+        });
+
+        function addApiKeyAuthorization() {
+          var key = encodeURIComponent($('#input_apiKey')[0].value);
+          if (key && key.trim() != "") {
+            var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("api_key", key, window.apiKeyVehicle);
+            window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
+            log("added key " + key);
+          }
+        }
+
+        $('#input_apiKey').change(addApiKeyAuthorization);
+
+        function log() {
+          if ('console' in window) {
+            console.log.apply(console, arguments);
+          }
+        }
+
+        function oAuthIsDefined(security) {
+          return security.clientId
+              && security.clientSecret
+              && security.appName
+              && security.realm;
+        }
+
+        function initializeSpringfox() {
+          var security = {};
+          window.springfox.securityConfig(function(data) {
+            security = data;
+            window.apiKeyVehicle = security.apiKeyVehicle || 'query';
+            if (security.apiKey) {
+              $('#input_apiKey').val(security.apiKey);
+              addApiKeyAuthorization();
+            }
+            if (typeof initOAuth == "function" && oAuthIsDefined(security)) {
+              initOAuth(security);
+            }
+          });
+        }
+      });
+    });
+  </script>
+</head>
+
+<body class="swagger-section">
+<div id="header">
+  <div class="swagger-ui-wrap">
+    <a id="logo" href="http://swagger.io/">swagger</a>
+
+    <form id="api_selector">
+      <div class="input">
+        <select id="select_baseUrl" name="select_baseUrl"><option value="http://141.64.5.234/excell-scheduling-api/v2/api-docs?group=excell-scheduling-api" selected="selected">excell-scheduling-api (/v2/api-docs?group=excell-scheduling-api)</option></select><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" style="display: none;" value="http://141.64.5.234/excell-scheduling-api/v2/api-docs?group=excell-scheduling-api" type="text">
+      </div>
+      <div class="input"><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"></div>
+      <div class="input"><a id="explore" href="#" data-sw-translate="">Explore</a></div>
+    </form>
+  </div>
+</div>
+
+<div id="message-bar" class="swagger-ui-wrap message-success" data-sw-translate=""></div>
+<div id="swagger-ui-container" class="swagger-ui-wrap"><div class="info" id="api_info">
+  <div class="info_title">ExCELL Scheduling API</div>
+  <div class="info_description markdown"><p>This API provides a list of suitable time slots for appointments based on route optimization.</p>
+</div>
+  
+  <div class="info_name" data-sw-translate="">Created by fkunde@beuth-hochschule</div>
+  
+  
+  <div class="info_license"><a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2</a></div>
+</div>
+<div class="container" id="resources_container">
+  <ul id="resources"><li id="resource_basic-error-controller" class="resource"><div class="heading">
+  <h2>
+    <a href="#%21/basic-error-controller" class="toggleEndpointList" data-id="basic-error-controller">basic-error-controller</a>  : Basic Error Controller
+  </h2>
+  <ul class="options">
+    <li>
+      <a href="#%21/basic-error-controller" id="endpointListTogger_basic-error-controller" class="toggleEndpointList" data-id="basic-error-controller" data-sw-translate="">Show/Hide</a>
+    </li>
+    <li>
+      <a href="#" class="collapseResource" data-id="basic-error-controller" data-sw-translate="">
+        List Operations
+      </a>
+    </li>
+    <li>
+      <a href="#" class="expandResource" data-id="basic-error-controller" data-sw-translate="">
+        Expand Operations
+      </a>
+    </li>
+  </ul>
+</div>
+<ul class="endpoints" id="basic-error-controller_endpoint_list" style="display:none">
+
+<li class="endpoint">
+  <ul class="operations">
+    <li class="delete operation" id="basic-error-controller_errorUsingDELETE">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/basic-error-controller/errorUsingDELETE" class="toggleOperation">delete</a>
+          </span>
+          <span class="path">
+          <a href="#%21/basic-error-controller/errorUsingDELETE" class="toggleOperation ">/error</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/basic-error-controller/errorUsingDELETE" class="toggleOperation">error</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="basic-error-controller_errorUsingDELETE_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.2920535548426676">Response Content Type</label>
+<select name="responseContentType" id="rct0.2920535548426676">
+  <option value="*/*" selected="selected">*/*</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">204</td>
+<td class="markdown"><p>No Content</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="get operation" id="basic-error-controller_errorUsingGET">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/basic-error-controller/errorUsingGET" class="toggleOperation">get</a>
+          </span>
+          <span class="path">
+          <a href="#%21/basic-error-controller/errorUsingGET" class="toggleOperation ">/error</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/basic-error-controller/errorUsingGET" class="toggleOperation">error</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="basic-error-controller_errorUsingGET_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.7633832093340044">Response Content Type</label>
+<select name="responseContentType" id="rct0.7633832093340044">
+  <option value="*/*" selected="selected">*/*</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">404</td>
+<td class="markdown"><p>Not Found</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="head operation" id="basic-error-controller_errorUsingHEAD">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/basic-error-controller/errorUsingHEAD" class="toggleOperation">head</a>
+          </span>
+          <span class="path">
+          <a href="#%21/basic-error-controller/errorUsingHEAD" class="toggleOperation ">/error</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/basic-error-controller/errorUsingHEAD" class="toggleOperation">error</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="basic-error-controller_errorUsingHEAD_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.24655628572949373">Response Content Type</label>
+<select name="responseContentType" id="rct0.24655628572949373">
+  <option value="*/*" selected="selected">*/*</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">204</td>
+<td class="markdown"><p>No Content</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="options operation" id="basic-error-controller_errorUsingOPTIONS">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/basic-error-controller/errorUsingOPTIONS" class="toggleOperation">options</a>
+          </span>
+          <span class="path">
+          <a href="#%21/basic-error-controller/errorUsingOPTIONS" class="toggleOperation ">/error</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/basic-error-controller/errorUsingOPTIONS" class="toggleOperation">error</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="basic-error-controller_errorUsingOPTIONS_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.9934841069702652">Response Content Type</label>
+<select name="responseContentType" id="rct0.9934841069702652">
+  <option value="*/*" selected="selected">*/*</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">204</td>
+<td class="markdown"><p>No Content</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="patch operation" id="basic-error-controller_errorUsingPATCH">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/basic-error-controller/errorUsingPATCH" class="toggleOperation">patch</a>
+          </span>
+          <span class="path">
+          <a href="#%21/basic-error-controller/errorUsingPATCH" class="toggleOperation ">/error</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/basic-error-controller/errorUsingPATCH" class="toggleOperation">error</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="basic-error-controller_errorUsingPATCH_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.7189001934876936">Response Content Type</label>
+<select name="responseContentType" id="rct0.7189001934876936">
+  <option value="*/*" selected="selected">*/*</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">204</td>
+<td class="markdown"><p>No Content</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="post operation" id="basic-error-controller_errorUsingPOST">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/basic-error-controller/errorUsingPOST" class="toggleOperation">post</a>
+          </span>
+          <span class="path">
+          <a href="#%21/basic-error-controller/errorUsingPOST" class="toggleOperation ">/error</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/basic-error-controller/errorUsingPOST" class="toggleOperation">error</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="basic-error-controller_errorUsingPOST_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.48659984348639196">Response Content Type</label>
+<select name="responseContentType" id="rct0.48659984348639196">
+  <option value="*/*" selected="selected">*/*</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">201</td>
+<td class="markdown"><p>Created</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">404</td>
+<td class="markdown"><p>Not Found</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="put operation" id="basic-error-controller_errorUsingPUT">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/basic-error-controller/errorUsingPUT" class="toggleOperation">put</a>
+          </span>
+          <span class="path">
+          <a href="#%21/basic-error-controller/errorUsingPUT" class="toggleOperation ">/error</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/basic-error-controller/errorUsingPUT" class="toggleOperation">error</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="basic-error-controller_errorUsingPUT_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.8143147482523175">Response Content Type</label>
+<select name="responseContentType" id="rct0.8143147482523175">
+  <option value="*/*" selected="selected">*/*</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">201</td>
+<td class="markdown"><p>Created</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">404</td>
+<td class="markdown"><p>Not Found</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li></ul>
+</li><li id="resource_health-mvc-endpoint" class="resource"><div class="heading">
+  <h2>
+    <a href="#%21/health-mvc-endpoint" class="toggleEndpointList" data-id="health-mvc-endpoint">health-mvc-endpoint</a>  : Health Mvc Endpoint
+  </h2>
+  <ul class="options">
+    <li>
+      <a href="#%21/health-mvc-endpoint" id="endpointListTogger_health-mvc-endpoint" class="toggleEndpointList" data-id="health-mvc-endpoint" data-sw-translate="">Show/Hide</a>
+    </li>
+    <li>
+      <a href="#" class="collapseResource" data-id="health-mvc-endpoint" data-sw-translate="">
+        List Operations
+      </a>
+    </li>
+    <li>
+      <a href="#" class="expandResource" data-id="health-mvc-endpoint" data-sw-translate="">
+        Expand Operations
+      </a>
+    </li>
+  </ul>
+</div>
+<ul class="endpoints" id="health-mvc-endpoint_endpoint_list" style="display:none">
+
+<li class="endpoint">
+  <ul class="operations">
+    <li class="delete operation" id="health-mvc-endpoint_invokeUsingDELETE">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/health-mvc-endpoint/invokeUsingDELETE" class="toggleOperation">delete</a>
+          </span>
+          <span class="path">
+          <a href="#%21/health-mvc-endpoint/invokeUsingDELETE" class="toggleOperation ">/health</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/health-mvc-endpoint/invokeUsingDELETE" class="toggleOperation">invoke</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="health-mvc-endpoint_invokeUsingDELETE_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.8575139656000578">Response Content Type</label>
+<select name="responseContentType" id="rct0.8575139656000578">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="mprincipal0.36964262292102945">principal</label></td>
+<td>
+
+				<textarea class="body-textarea" name="principal" id="mprincipal0.36964262292102945"></textarea>
+				<br>
+				<div class="parameter-content-type"><div><label for="pct0.018315138878691073">Parameter content type:</label>
+<select name="parameterContentType" id="pct0.018315138878691073">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+
+</td>
+<td class="markdown"><p>principal</p>
+</td>
+<td>body</td>
+<td>
+	<span class="model-signature">Principal</span>
+</td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">204</td>
+<td class="markdown"><p>No Content</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="get operation" id="health-mvc-endpoint_invokeUsingGET">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/health-mvc-endpoint/invokeUsingGET" class="toggleOperation">get</a>
+          </span>
+          <span class="path">
+          <a href="#%21/health-mvc-endpoint/invokeUsingGET" class="toggleOperation ">/health</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/health-mvc-endpoint/invokeUsingGET" class="toggleOperation">invoke</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="health-mvc-endpoint_invokeUsingGET_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.5744645918758803">Response Content Type</label>
+<select name="responseContentType" id="rct0.5744645918758803">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="mprincipal0.15267446912915106">principal</label></td>
+<td>
+
+				<textarea class="body-textarea" name="principal" id="mprincipal0.15267446912915106"></textarea>
+				<br>
+				<div class="parameter-content-type"><div><label for="pct0.7393583058175676">Parameter content type:</label>
+<select name="parameterContentType" id="pct0.7393583058175676">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+
+</td>
+<td class="markdown"><p>principal</p>
+</td>
+<td>body</td>
+<td>
+	<span class="model-signature">Principal</span>
+</td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">404</td>
+<td class="markdown"><p>Not Found</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="head operation" id="health-mvc-endpoint_invokeUsingHEAD">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/health-mvc-endpoint/invokeUsingHEAD" class="toggleOperation">head</a>
+          </span>
+          <span class="path">
+          <a href="#%21/health-mvc-endpoint/invokeUsingHEAD" class="toggleOperation ">/health</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/health-mvc-endpoint/invokeUsingHEAD" class="toggleOperation">invoke</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="health-mvc-endpoint_invokeUsingHEAD_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.8026764782269895">Response Content Type</label>
+<select name="responseContentType" id="rct0.8026764782269895">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="mprincipal0.07312326094975252">principal</label></td>
+<td>
+        <textarea class="body-textarea" readonly="readonly" name="principal" id="mprincipal0.07312326094975252"></textarea>
+</td>
+<td class="markdown"><p>principal</p>
+</td>
+<td>body</td>
+<td><span class="model-signature">Principal</span></td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">204</td>
+<td class="markdown"><p>No Content</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="options operation" id="health-mvc-endpoint_invokeUsingOPTIONS">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/health-mvc-endpoint/invokeUsingOPTIONS" class="toggleOperation">options</a>
+          </span>
+          <span class="path">
+          <a href="#%21/health-mvc-endpoint/invokeUsingOPTIONS" class="toggleOperation ">/health</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/health-mvc-endpoint/invokeUsingOPTIONS" class="toggleOperation">invoke</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="health-mvc-endpoint_invokeUsingOPTIONS_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.872396932709151">Response Content Type</label>
+<select name="responseContentType" id="rct0.872396932709151">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="mprincipal0.2712730565073247">principal</label></td>
+<td>
+        <textarea class="body-textarea" readonly="readonly" name="principal" id="mprincipal0.2712730565073247"></textarea>
+</td>
+<td class="markdown"><p>principal</p>
+</td>
+<td>body</td>
+<td><span class="model-signature">Principal</span></td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">204</td>
+<td class="markdown"><p>No Content</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="patch operation" id="health-mvc-endpoint_invokeUsingPATCH">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/health-mvc-endpoint/invokeUsingPATCH" class="toggleOperation">patch</a>
+          </span>
+          <span class="path">
+          <a href="#%21/health-mvc-endpoint/invokeUsingPATCH" class="toggleOperation ">/health</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/health-mvc-endpoint/invokeUsingPATCH" class="toggleOperation">invoke</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="health-mvc-endpoint_invokeUsingPATCH_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.07420903016324243">Response Content Type</label>
+<select name="responseContentType" id="rct0.07420903016324243">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="mprincipal0.1501053712501781">principal</label></td>
+<td>
+
+				<textarea class="body-textarea" name="principal" id="mprincipal0.1501053712501781"></textarea>
+				<br>
+				<div class="parameter-content-type"><div><label for="pct0.5937126692630682">Parameter content type:</label>
+<select name="parameterContentType" id="pct0.5937126692630682">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+
+</td>
+<td class="markdown"><p>principal</p>
+</td>
+<td>body</td>
+<td>
+	<span class="model-signature">Principal</span>
+</td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">204</td>
+<td class="markdown"><p>No Content</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="post operation" id="health-mvc-endpoint_invokeUsingPOST">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/health-mvc-endpoint/invokeUsingPOST" class="toggleOperation">post</a>
+          </span>
+          <span class="path">
+          <a href="#%21/health-mvc-endpoint/invokeUsingPOST" class="toggleOperation ">/health</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/health-mvc-endpoint/invokeUsingPOST" class="toggleOperation">invoke</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="health-mvc-endpoint_invokeUsingPOST_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.5985407797470058">Response Content Type</label>
+<select name="responseContentType" id="rct0.5985407797470058">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="mprincipal0.8489392024210003">principal</label></td>
+<td>
+
+				<textarea class="body-textarea" name="principal" id="mprincipal0.8489392024210003"></textarea>
+				<br>
+				<div class="parameter-content-type"><div><label for="pct0.22253840658083712">Parameter content type:</label>
+<select name="parameterContentType" id="pct0.22253840658083712">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+
+</td>
+<td class="markdown"><p>principal</p>
+</td>
+<td>body</td>
+<td>
+	<span class="model-signature">Principal</span>
+</td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">201</td>
+<td class="markdown"><p>Created</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">404</td>
+<td class="markdown"><p>Not Found</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="put operation" id="health-mvc-endpoint_invokeUsingPUT">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/health-mvc-endpoint/invokeUsingPUT" class="toggleOperation">put</a>
+          </span>
+          <span class="path">
+          <a href="#%21/health-mvc-endpoint/invokeUsingPUT" class="toggleOperation ">/health</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/health-mvc-endpoint/invokeUsingPUT" class="toggleOperation">invoke</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="health-mvc-endpoint_invokeUsingPUT_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.19193137483884937">Response Content Type</label>
+<select name="responseContentType" id="rct0.19193137483884937">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="mprincipal0.12989424716803566">principal</label></td>
+<td>
+
+				<textarea class="body-textarea" name="principal" id="mprincipal0.12989424716803566"></textarea>
+				<br>
+				<div class="parameter-content-type"><div><label for="pct0.8659438182155007">Parameter content type:</label>
+<select name="parameterContentType" id="pct0.8659438182155007">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+
+</td>
+<td class="markdown"><p>principal</p>
+</td>
+<td>body</td>
+<td>
+	<span class="model-signature">Principal</span>
+</td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">201</td>
+<td class="markdown"><p>Created</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">404</td>
+<td class="markdown"><p>Not Found</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="delete operation" id="health-mvc-endpoint_invokeUsingDELETE_1">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/health-mvc-endpoint/invokeUsingDELETE_1" class="toggleOperation">delete</a>
+          </span>
+          <span class="path">
+          <a href="#%21/health-mvc-endpoint/invokeUsingDELETE_1" class="toggleOperation ">/health.json</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/health-mvc-endpoint/invokeUsingDELETE_1" class="toggleOperation">invoke</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="health-mvc-endpoint_invokeUsingDELETE_1_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.5300168475766093">Response Content Type</label>
+<select name="responseContentType" id="rct0.5300168475766093">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="mprincipal0.93820028475187">principal</label></td>
+<td>
+
+				<textarea class="body-textarea" name="principal" id="mprincipal0.93820028475187"></textarea>
+				<br>
+				<div class="parameter-content-type"><div><label for="pct0.7162985221314907">Parameter content type:</label>
+<select name="parameterContentType" id="pct0.7162985221314907">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+
+</td>
+<td class="markdown"><p>principal</p>
+</td>
+<td>body</td>
+<td>
+	<span class="model-signature">Principal</span>
+</td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">204</td>
+<td class="markdown"><p>No Content</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="get operation" id="health-mvc-endpoint_invokeUsingGET_1">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/health-mvc-endpoint/invokeUsingGET_1" class="toggleOperation">get</a>
+          </span>
+          <span class="path">
+          <a href="#%21/health-mvc-endpoint/invokeUsingGET_1" class="toggleOperation ">/health.json</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/health-mvc-endpoint/invokeUsingGET_1" class="toggleOperation">invoke</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="health-mvc-endpoint_invokeUsingGET_1_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.17716753362363935">Response Content Type</label>
+<select name="responseContentType" id="rct0.17716753362363935">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="mprincipal0.31772267085078465">principal</label></td>
+<td>
+
+				<textarea class="body-textarea" name="principal" id="mprincipal0.31772267085078465"></textarea>
+				<br>
+				<div class="parameter-content-type"><div><label for="pct0.13368350853155875">Parameter content type:</label>
+<select name="parameterContentType" id="pct0.13368350853155875">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+
+</td>
+<td class="markdown"><p>principal</p>
+</td>
+<td>body</td>
+<td>
+	<span class="model-signature">Principal</span>
+</td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">404</td>
+<td class="markdown"><p>Not Found</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="head operation" id="health-mvc-endpoint_invokeUsingHEAD_1">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/health-mvc-endpoint/invokeUsingHEAD_1" class="toggleOperation">head</a>
+          </span>
+          <span class="path">
+          <a href="#%21/health-mvc-endpoint/invokeUsingHEAD_1" class="toggleOperation ">/health.json</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/health-mvc-endpoint/invokeUsingHEAD_1" class="toggleOperation">invoke</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="health-mvc-endpoint_invokeUsingHEAD_1_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.12974660632071366">Response Content Type</label>
+<select name="responseContentType" id="rct0.12974660632071366">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="mprincipal0.44506069943272286">principal</label></td>
+<td>
+        <textarea class="body-textarea" readonly="readonly" name="principal" id="mprincipal0.44506069943272286"></textarea>
+</td>
+<td class="markdown"><p>principal</p>
+</td>
+<td>body</td>
+<td><span class="model-signature">Principal</span></td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">204</td>
+<td class="markdown"><p>No Content</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="options operation" id="health-mvc-endpoint_invokeUsingOPTIONS_1">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/health-mvc-endpoint/invokeUsingOPTIONS_1" class="toggleOperation">options</a>
+          </span>
+          <span class="path">
+          <a href="#%21/health-mvc-endpoint/invokeUsingOPTIONS_1" class="toggleOperation ">/health.json</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/health-mvc-endpoint/invokeUsingOPTIONS_1" class="toggleOperation">invoke</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="health-mvc-endpoint_invokeUsingOPTIONS_1_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.8090790968095248">Response Content Type</label>
+<select name="responseContentType" id="rct0.8090790968095248">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="mprincipal0.7616623320153831">principal</label></td>
+<td>
+        <textarea class="body-textarea" readonly="readonly" name="principal" id="mprincipal0.7616623320153831"></textarea>
+</td>
+<td class="markdown"><p>principal</p>
+</td>
+<td>body</td>
+<td><span class="model-signature">Principal</span></td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">204</td>
+<td class="markdown"><p>No Content</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="patch operation" id="health-mvc-endpoint_invokeUsingPATCH_1">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/health-mvc-endpoint/invokeUsingPATCH_1" class="toggleOperation">patch</a>
+          </span>
+          <span class="path">
+          <a href="#%21/health-mvc-endpoint/invokeUsingPATCH_1" class="toggleOperation ">/health.json</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/health-mvc-endpoint/invokeUsingPATCH_1" class="toggleOperation">invoke</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="health-mvc-endpoint_invokeUsingPATCH_1_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.053292165972875005">Response Content Type</label>
+<select name="responseContentType" id="rct0.053292165972875005">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="mprincipal0.008712825037921479">principal</label></td>
+<td>
+
+				<textarea class="body-textarea" name="principal" id="mprincipal0.008712825037921479"></textarea>
+				<br>
+				<div class="parameter-content-type"><div><label for="pct0.8029277992683393">Parameter content type:</label>
+<select name="parameterContentType" id="pct0.8029277992683393">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+
+</td>
+<td class="markdown"><p>principal</p>
+</td>
+<td>body</td>
+<td>
+	<span class="model-signature">Principal</span>
+</td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">204</td>
+<td class="markdown"><p>No Content</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="post operation" id="health-mvc-endpoint_invokeUsingPOST_1">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/health-mvc-endpoint/invokeUsingPOST_1" class="toggleOperation">post</a>
+          </span>
+          <span class="path">
+          <a href="#%21/health-mvc-endpoint/invokeUsingPOST_1" class="toggleOperation ">/health.json</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/health-mvc-endpoint/invokeUsingPOST_1" class="toggleOperation">invoke</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="health-mvc-endpoint_invokeUsingPOST_1_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.32463715253473446">Response Content Type</label>
+<select name="responseContentType" id="rct0.32463715253473446">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="mprincipal0.08122486896537295">principal</label></td>
+<td>
+
+				<textarea class="body-textarea" name="principal" id="mprincipal0.08122486896537295"></textarea>
+				<br>
+				<div class="parameter-content-type"><div><label for="pct0.06883118496936824">Parameter content type:</label>
+<select name="parameterContentType" id="pct0.06883118496936824">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+
+</td>
+<td class="markdown"><p>principal</p>
+</td>
+<td>body</td>
+<td>
+	<span class="model-signature">Principal</span>
+</td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">201</td>
+<td class="markdown"><p>Created</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">404</td>
+<td class="markdown"><p>Not Found</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="put operation" id="health-mvc-endpoint_invokeUsingPUT_1">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/health-mvc-endpoint/invokeUsingPUT_1" class="toggleOperation">put</a>
+          </span>
+          <span class="path">
+          <a href="#%21/health-mvc-endpoint/invokeUsingPUT_1" class="toggleOperation ">/health.json</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/health-mvc-endpoint/invokeUsingPUT_1" class="toggleOperation">invoke</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="health-mvc-endpoint_invokeUsingPUT_1_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model {</span><div></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{}</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.4163089580214405">Response Content Type</label>
+<select name="responseContentType" id="rct0.4163089580214405">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="mprincipal0.7056879788547248">principal</label></td>
+<td>
+
+				<textarea class="body-textarea" name="principal" id="mprincipal0.7056879788547248"></textarea>
+				<br>
+				<div class="parameter-content-type"><div><label for="pct0.7603672971796366">Parameter content type:</label>
+<select name="parameterContentType" id="pct0.7603672971796366">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+
+</td>
+<td class="markdown"><p>principal</p>
+</td>
+<td>body</td>
+<td>
+	<span class="model-signature">Principal</span>
+</td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">201</td>
+<td class="markdown"><p>Created</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">404</td>
+<td class="markdown"><p>Not Found</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li></ul>
+</li><li id="resource_planning-controller" class="resource"><div class="heading">
+  <h2>
+    <a href="#%21/planning-controller" class="toggleEndpointList" data-id="planning-controller">planning-controller</a>  : Planning Controller
+  </h2>
+  <ul class="options">
+    <li>
+      <a href="#%21/planning-controller" id="endpointListTogger_planning-controller" class="toggleEndpointList" data-id="planning-controller" data-sw-translate="">Show/Hide</a>
+    </li>
+    <li>
+      <a href="#" class="collapseResource" data-id="planning-controller" data-sw-translate="">
+        List Operations
+      </a>
+    </li>
+    <li>
+      <a href="#" class="expandResource" data-id="planning-controller" data-sw-translate="">
+        Expand Operations
+      </a>
+    </li>
+  </ul>
+</div>
+<ul class="endpoints" id="planning-controller_endpoint_list" style="display:none">
+
+<li class="endpoint">
+  <ul class="operations">
+    <li class="get operation" id="planning-controller_schedulingUsingGET">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/planning-controller/schedulingUsingGET" class="toggleOperation">get</a>
+          </span>
+          <span class="path">
+          <a href="#%21/planning-controller/schedulingUsingGET" class="toggleOperation ">/v1/scheduling</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/planning-controller/schedulingUsingGET" class="toggleOperation">Get possible time slots for appointments</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="planning-controller_schedulingUsingGET_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model [</span><div>PlanningResponse</div><span class="strong">]</span><br><span class="strong">PlanningResponse {</span><div><span class="propName ">calendarId</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">endDate</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">startDate</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">travelDistance</span> (<span class="propType">number</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">travelTime</span> (<span class="propType">integer</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">[
+  {
+    "<span class="attribute">calendarId</span>": <span class="value"><span class="string">"string"</span></span>,
+    "<span class="attribute">endDate</span>": <span class="value"><span class="string">"2017-09-22T13:23:04.124Z"</span></span>,
+    "<span class="attribute">startDate</span>": <span class="value"><span class="string">"2017-09-22T13:23:04.124Z"</span></span>,
+    "<span class="attribute">travelDistance</span>": <span class="value"><span class="number">0</span></span>,
+    "<span class="attribute">travelTime</span>": <span class="value"><span class="number">0</span>
+  }</span>
+]</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.7635710689961552">Response Content Type</label>
+<select name="responseContentType" id="rct0.7635710689961552">
+  <option value="application/json" selected="selected">application/json</option>
+  <option value="*/*">*/*</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="myear0.3044343783784744">year</label></td>
+<td>
+
+<input class="parameter" minlength="0" name="year" placeholder="" id="myear0.3044343783784744" value="2016" type="text">
+</td>
+<td class="markdown"><p>Year of new appointment</p>
+</td>
+<td>query</td>
+<td>
+	<span class="model-signature">integer</span>
+</td>
+</tr><tr><td class="code"><label for="mmonth0.9681464992376656">month</label></td>
+<td>
+
+<input class="parameter" minlength="0" name="month" placeholder="" id="mmonth0.9681464992376656" value="1" type="text">
+</td>
+<td class="markdown"><p>Month of new appointment</p>
+</td>
+<td>query</td>
+<td>
+	<span class="model-signature">integer</span>
+</td>
+</tr><tr><td class="code"><label for="mday0.43265680375059934">day</label></td>
+<td>
+
+<input class="parameter" minlength="0" name="day" placeholder="" id="mday0.43265680375059934" value="1" type="text">
+</td>
+<td class="markdown"><p>Day of new appointment</p>
+</td>
+<td>query</td>
+<td>
+	<span class="model-signature">integer</span>
+</td>
+</tr><tr><td class="code"><label for="mdurationInMin0.08315390268291589">durationInMin</label></td>
+<td>
+
+<input class="parameter" minlength="0" name="durationInMin" placeholder="" id="mdurationInMin0.08315390268291589" value="60" type="text">
+</td>
+<td class="markdown"><p>Duration of new appointment</p>
+</td>
+<td>query</td>
+<td>
+	<span class="model-signature">integer</span>
+</td>
+</tr><tr><td class="code"><label for="mappointmentLat0.030752547415385023">appointmentLat</label></td>
+<td>
+
+<input class="parameter" minlength="0" name="appointmentLat" placeholder="" id="mappointmentLat0.030752547415385023" value="51.029" type="text">
+</td>
+<td class="markdown"><p>Latitude of new appointment</p>
+</td>
+<td>query</td>
+<td>
+	<span class="model-signature">double</span>
+</td>
+</tr><tr><td class="code"><label for="mappointmentLon0.8746271329414717">appointmentLon</label></td>
+<td>
+
+<input class="parameter" minlength="0" name="appointmentLon" placeholder="" id="mappointmentLon0.8746271329414717" value="13.736" type="text">
+</td>
+<td class="markdown"><p>Longitude of new appointment</p>
+</td>
+<td>query</td>
+<td>
+	<span class="model-signature">double</span>
+</td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">404</td>
+<td class="markdown"><p>Not Found</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="post operation" id="planning-controller_schedulingcareUsingPOST">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/planning-controller/schedulingcareUsingPOST" class="toggleOperation">post</a>
+          </span>
+          <span class="path">
+          <a href="#%21/planning-controller/schedulingcareUsingPOST" class="toggleOperation ">/v1/schedulingcare</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/planning-controller/schedulingcareUsingPOST" class="toggleOperation">Generate the scheduling for elder care</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="planning-controller_schedulingcareUsingPOST_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">CareScenarioResponse {</span><div><span class="propName ">response</span> (<span class="propType">object</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">{
+  "<span class="attribute">response</span>": <span class="value">{}
+}</span></code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.7627403012537015">Response Content Type</label>
+<select name="responseContentType" id="rct0.7627403012537015">
+  <option value="application/json" selected="selected">application/json</option>
+  <option value="*/*">*/*</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="mjsonObjectInput0.46127025311008085">jsonObjectInput</label></td>
+<td>
+
+				<textarea class="body-textarea" name="jsonObjectInput" id="mjsonObjectInput0.46127025311008085"></textarea>
+				<br>
+				<div class="parameter-content-type"><div><label for="pct0.37029374485768074">Parameter content type:</label>
+<select name="parameterContentType" id="pct0.37029374485768074">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+
+</td>
+<td class="markdown"><p>JSON object with patients and carers informationen</p>
+</td>
+<td>body</td>
+<td>
+	<span class="model-signature">string</span>
+</td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">201</td>
+<td class="markdown"><p>Created</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">404</td>
+<td class="markdown"><p>Not Found</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">
+  <ul class="operations">
+    <li class="post operation" id="planning-controller_schedulingnewUsingPOST">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#%21/planning-controller/schedulingnewUsingPOST" class="toggleOperation">post</a>
+          </span>
+          <span class="path">
+          <a href="#%21/planning-controller/schedulingnewUsingPOST" class="toggleOperation ">/v1/schedulingnew</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#%21/planning-controller/schedulingnewUsingPOST" class="toggleOperation">Get possible time slots for appointments</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="planning-controller_schedulingnewUsingPOST_content" style="display:none">
+
+        
+          <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+          <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Model Schema</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model [</span><div>PlanningResponse</div><span class="strong">]</span><br><span class="strong">PlanningResponse {</span><div><span class="propName ">calendarId</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">endDate</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">startDate</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">travelDistance</span> (<span class="propType">number</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">travelTime</span> (<span class="propType">integer</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+    <pre><code class="json">[
+  {
+    "<span class="attribute">calendarId</span>": <span class="value"><span class="string">"string"</span></span>,
+    "<span class="attribute">endDate</span>": <span class="value"><span class="string">"2017-09-22T13:23:04.139Z"</span></span>,
+    "<span class="attribute">startDate</span>": <span class="value"><span class="string">"2017-09-22T13:23:04.139Z"</span></span>,
+    "<span class="attribute">travelDistance</span>": <span class="value"><span class="number">0</span></span>,
+    "<span class="attribute">travelTime</span>": <span class="value"><span class="number">0</span>
+  }</span>
+]</code></pre>
+    <small class="notice"></small>
+  </div>
+</div>
+
+</div></div></div></span></p>
+          <br>
+          <div class="response-content-type"><div><label data-sw-translate="" for="rct0.3285356983534998">Response Content Type</label>
+<select name="responseContentType" id="rct0.3285356983534998">
+  <option value="application/json" selected="selected">application/json</option>
+  <option value="*/*">*/*</option>
+</select>
+</div></div>
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="mjsonArrayInput0.2700990108291268">jsonArrayInput</label></td>
+<td>
+
+				<textarea class="body-textarea" name="jsonArrayInput" id="mjsonArrayInput0.2700990108291268"></textarea>
+				<br>
+				<div class="parameter-content-type"><div><label for="pct0.25684250353637783">Parameter content type:</label>
+<select name="parameterContentType" id="pct0.25684250353637783">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+
+</td>
+<td class="markdown"><p>JSON array of time gaps with coordinates</p>
+</td>
+<td>body</td>
+<td>
+	<span class="model-signature">string</span>
+</td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+
+            <tr><td class="code" width="15%">201</td>
+<td class="markdown"><p>Created</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">401</td>
+<td class="markdown"><p>Unauthorized</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">403</td>
+<td class="markdown"><p>Forbidden</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr><tr><td class="code" width="15%">404</td>
+<td class="markdown"><p>Not Found</p>
+</td>
+<td width="50%"><span class="model-signature"></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="button">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4>Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li></ul>
+</li></ul>
+
+  <div class="footer">
+    <h4 style="color: #999">[ <span style="font-variant: small-caps">base url</span>: /
+  , <span style="font-variant: small-caps" data-sw-translate="">api version</span>: Version 1.0
+    ]
+    </h4>
+    </div>
+</div>
+</div>
+
+
+</body></html>
