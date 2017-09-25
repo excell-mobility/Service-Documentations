@@ -1,0 +1,729 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "Api Documentation",
+		"version": "1.0",
+		"title": "Api Documentation",
+		"termsOfService": "urn:tos",
+		"contact": {
+		},
+		"license": {
+			"name": "Apache 2.0",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0"
+		}
+	},
+	"host": "excell.vkw.tu-dresden.de:20081",
+	"basePath": "/",
+	"tags": [
+		{
+			"name": "health-mvc-endpoint",
+			"description": "Health Mvc Endpoint"
+		},
+		{
+			"name": "tracking-service-controller",
+			"description": "Tracking Service"
+		},
+		{
+			"name": "basic-error-controller",
+			"description": "Basic Error Controller"
+		}]
+	,
+	"paths": {
+		"/TrackingService/getPositionData": {
+			"get": {
+				"tags": [
+					"tracking-service-controller"]
+				,
+				"summary": "Get last tracking information for one or more IDs",
+				"operationId": "getPositionDataUsingGET",
+				"consumes": [
+					"application/json"]
+				,
+				"produces": [
+					"application/json",
+					"*/*"]
+				,
+				"parameters": [
+					{
+						"name": "idList",
+						"in": "query",
+						"description": "idList",
+						"required": true,
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"collectionFormat": "multi"
+					}]
+				,
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/SimpleGpsRecord"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/TrackingService/putPositionData/{appId}/{id}": {
+			"put": {
+				"tags": [
+					"tracking-service-controller"]
+				,
+				"summary": "Put Postion Data",
+				"operationId": "putPostionDataUsingPUT",
+				"consumes": [
+					"application/json"]
+				,
+				"produces": [
+					"application/json",
+					"*/*"]
+				,
+				"parameters": [
+					{
+						"name": "appId",
+						"in": "path",
+						"description": "appId",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "gpsRecordList",
+						"description": "gpsRecordList",
+						"required": true,
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/FullGpsRecord"
+							}
+						}
+					}]
+				,
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/error": {
+			"get": {
+				"tags": [
+					"basic-error-controller"]
+				,
+				"summary": "error",
+				"operationId": "errorUsingGET",
+				"consumes": [
+					"application/json"]
+				,
+				"produces": [
+					"*/*"]
+				,
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object",
+							"additionalProperties": {
+								"type": "object"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			},
+			"head": {
+				"tags": [
+					"basic-error-controller"]
+				,
+				"summary": "error",
+				"operationId": "errorUsingHEAD",
+				"consumes": [
+					"application/json"]
+				,
+				"produces": [
+					"*/*"]
+				,
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object",
+							"additionalProperties": {
+								"type": "object"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"204": {
+						"description": "No Content"
+					},
+					"403": {
+						"description": "Forbidden"
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"basic-error-controller"]
+				,
+				"summary": "error",
+				"operationId": "errorUsingPOST",
+				"consumes": [
+					"application/json"]
+				,
+				"produces": [
+					"*/*"]
+				,
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object",
+							"additionalProperties": {
+								"type": "object"
+							}
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"basic-error-controller"]
+				,
+				"summary": "error",
+				"operationId": "errorUsingPUT",
+				"consumes": [
+					"application/json"]
+				,
+				"produces": [
+					"*/*"]
+				,
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object",
+							"additionalProperties": {
+								"type": "object"
+							}
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"basic-error-controller"]
+				,
+				"summary": "error",
+				"operationId": "errorUsingDELETE",
+				"consumes": [
+					"application/json"]
+				,
+				"produces": [
+					"*/*"]
+				,
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object",
+							"additionalProperties": {
+								"type": "object"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"204": {
+						"description": "No Content"
+					},
+					"403": {
+						"description": "Forbidden"
+					}
+				}
+			},
+			"options": {
+				"tags": [
+					"basic-error-controller"]
+				,
+				"summary": "error",
+				"operationId": "errorUsingOPTIONS",
+				"consumes": [
+					"application/json"]
+				,
+				"produces": [
+					"*/*"]
+				,
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object",
+							"additionalProperties": {
+								"type": "object"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"204": {
+						"description": "No Content"
+					},
+					"403": {
+						"description": "Forbidden"
+					}
+				}
+			},
+			"patch": {
+				"tags": [
+					"basic-error-controller"]
+				,
+				"summary": "error",
+				"operationId": "errorUsingPATCH",
+				"consumes": [
+					"application/json"]
+				,
+				"produces": [
+					"*/*"]
+				,
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object",
+							"additionalProperties": {
+								"type": "object"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"204": {
+						"description": "No Content"
+					},
+					"403": {
+						"description": "Forbidden"
+					}
+				}
+			}
+		},
+		"/getPositionData": {
+			"get": {
+				"tags": [
+					"tracking-service-controller"]
+				,
+				"summary": "Get last tracking information for one or more IDs (Deprecated)",
+				"operationId": "getPositionDataDeprecatedUsingGET",
+				"consumes": [
+					"application/json"]
+				,
+				"produces": [
+					"application/json",
+					"*/*"]
+				,
+				"parameters": [
+					{
+						"name": "idList",
+						"in": "query",
+						"description": "idList",
+						"required": true,
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"collectionFormat": "multi"
+					}]
+				,
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/SimpleGpsRecord"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"deprecated": true
+			}
+		},
+		"/health": {
+			"get": {
+				"tags": [
+					"health-mvc-endpoint"]
+				,
+				"summary": "invoke",
+				"operationId": "invokeUsingGET",
+				"consumes": [
+					"application/json"]
+				,
+				"produces": [
+					"application/vnd.spring-boot.actuator.v1+json",
+					"application/json"]
+				,
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/health.json": {
+			"get": {
+				"tags": [
+					"health-mvc-endpoint"]
+				,
+				"summary": "invoke",
+				"operationId": "invokeUsingGET_1",
+				"consumes": [
+					"application/json"]
+				,
+				"produces": [
+					"application/vnd.spring-boot.actuator.v1+json",
+					"application/json"]
+				,
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/putPositionData/{appId}/{id}": {
+			"put": {
+				"tags": [
+					"tracking-service-controller"]
+				,
+				"summary": "Put Postion Data (Deprecated)",
+				"operationId": "putPostionDataDeprecatedUsingPUT",
+				"consumes": [
+					"application/json"]
+				,
+				"produces": [
+					"application/json",
+					"*/*"]
+				,
+				"parameters": [
+					{
+						"name": "appId",
+						"in": "path",
+						"description": "appId",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "gpsRecordList",
+						"description": "gpsRecordList",
+						"required": true,
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/FullGpsRecord"
+							}
+						}
+					}]
+				,
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"deprecated": true
+			}
+		}
+	},
+	"definitions": {
+		"SimpleGpsRecord": {
+			"type": "object",
+			"properties": {
+				"date": {
+					"type": "string",
+					"example": "yyyy-MM-dd'T'HH:mm:ss"
+				},
+				"id": {
+					"type": "string"
+				},
+				"latitude": {
+					"type": "number",
+					"format": "double"
+				},
+				"longitude": {
+					"type": "number",
+					"format": "double"
+				}
+			}
+		},
+		"ModelAndView": {
+			"type": "object",
+			"properties": {
+				"empty": {
+					"type": "boolean"
+				},
+				"model": {
+					"type": "object"
+				},
+				"modelMap": {
+					"type": "object",
+					"additionalProperties": {
+						"type": "object"
+					}
+				},
+				"reference": {
+					"type": "boolean"
+				},
+				"status": {
+					"type": "string",
+					"enum": [
+						"100",
+						"101",
+						"102",
+						"103",
+						"200",
+						"201",
+						"202",
+						"203",
+						"204",
+						"205",
+						"206",
+						"207",
+						"208",
+						"226",
+						"300",
+						"301",
+						"302",
+						"303",
+						"304",
+						"305",
+						"307",
+						"308",
+						"400",
+						"401",
+						"402",
+						"403",
+						"404",
+						"405",
+						"406",
+						"407",
+						"408",
+						"409",
+						"410",
+						"411",
+						"412",
+						"413",
+						"414",
+						"415",
+						"416",
+						"417",
+						"418",
+						"419",
+						"420",
+						"421",
+						"422",
+						"423",
+						"424",
+						"426",
+						"428",
+						"429",
+						"431",
+						"451",
+						"500",
+						"501",
+						"502",
+						"503",
+						"504",
+						"505",
+						"506",
+						"507",
+						"508",
+						"509",
+						"510",
+						"511"]
+				},
+				"view": {
+					"$ref": "#/definitions/View"
+				},
+				"viewName": {
+					"type": "string"
+				}
+			}
+		},
+		"View": {
+			"type": "object",
+			"properties": {
+				"contentType": {
+					"type": "string"
+				}
+			}
+		},
+		"FullGpsRecord": {
+			"type": "object",
+			"properties": {
+				"accuracy": {
+					"type": "number",
+					"format": "double"
+				},
+				"altitude": {
+					"type": "number",
+					"format": "double"
+				},
+				"bearing": {
+					"type": "number",
+					"format": "double"
+				},
+				"date": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"latitude": {
+					"type": "number",
+					"format": "double"
+				},
+				"locationProvider": {
+					"type": "string"
+				},
+				"longitude": {
+					"type": "number",
+					"format": "double"
+				},
+				"speed": {
+					"type": "number",
+					"format": "double"
+				},
+				"tmode": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}
