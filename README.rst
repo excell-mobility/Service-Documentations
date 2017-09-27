@@ -1,7 +1,7 @@
 Service Dokumentationen
 =======================
 
-Behinaltet momentan die Swagger Dokumentationen für::
+Beinhaltet momentan die Swagger Dokumentationen für::
 
   * CsEventManager
   * SensorDataColletor
