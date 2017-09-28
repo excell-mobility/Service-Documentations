@@ -31,3 +31,9 @@ Also zum Beispiel::
   https://dlr-integration.minglabs.com/swagger/index.html?url=GeocodingService.json
 
 für die Geocoding Dokumentation.
+
+
+TODO::
+
+  * Change hosts and base path to match access via Integration Layer
+  * Add api token auth to every swagger file
