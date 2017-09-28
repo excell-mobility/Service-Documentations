@@ -17,7 +17,7 @@ Ein Beispiel wie momentan diese Services über die Integration Layer angesproche
 
   https://dlr-integration.minglabs.com/swagger/API-Example.html
 
-Die Swagger Dokumentation befindet sich hier::
+Die Swagger Dokumentation für die Integration Layer befindet sich hier::
 
   https://dlr-integration.minglabs.com/swagger/index.html
 
