@@ -1,0 +1,185 @@
+swagger: '2.0'
+info:
+  title: ExCell DLR Integration Layer
+  description: API Documentation of the ExCell DLR Integration Layer
+  version: 1.0.0
+host: 'dlr-integration.minglabs.com'
+schemes:
+  - http
+  - https
+basePath: /api/v1
+produces:
+  - application/json
+paths:
+  /tokenauth/:
+    post:
+      summary: Fetches user webtoken
+      description: >-
+        Returns the webtoken for the user to authenticate with the server. The
+        token has to be passed in every request in the 'Authorization' Header
+        with the value 'Token <token>'. A token is only valid for the user-agent
+        used to authenticate.
+      parameters:
+        - in: body
+          name: body
+          description: Fetches user webtoken
+          required: true
+          schema:
+            $ref: '#/definitions/UserToken'
+      tags:
+        - user
+      responses:
+        '200':
+          description: success - valid token retrieved
+        '201':
+          description: success - new valid token generated and retrieved
+        '400':
+          description: >-
+            Bad request - Either the user does not exist or the password does
+            not match to the user
+  /tokenauth/clients/:
+    get:
+      summary: Show all User-Agents for valid tokens
+      description: >-
+        For different user-agents there are different tokens. With this endpoint
+        one can retrieve all user-agents for all valid tokens.
+      tags:
+        - user
+      responses:
+        '200':
+          description: success
+        '401':
+          description: >-
+            unauthorized - authentication credentials were not provided or
+            invalid
+      security:
+        - api_key: []
+  /tokenauth/logout-all/:
+    post:
+      summary: Invalidates all token user-agent combinations
+      tags:
+        - user
+      responses:
+        '200':
+          description: success
+        '401':
+          description: >-
+            unauthorized - authentication credentials were not provided or
+            invalid
+      security:
+        - api_key: []
+  /tokenauth/signup/:
+    post:
+      summary: Signup for new user
+      parameters:
+        - in: body
+          name: body
+          description: Basic signup data
+          required: true
+          schema:
+            $ref: '#/definitions/UserSignup'
+      tags:
+        - user
+      responses:
+        '201':
+          description: success - user and token created
+        '400':
+          description: >-
+            Bad request - Username not available, or wrong username- / email format.
+  /report/service-requests/:
+    get:
+      summary: Returns the amount of requests to each service.
+      description: >-
+        Returns the amount of requests to each service in the given date range. 
+      tags:
+        - client
+      parameters:
+        - in: query
+          name: start_date
+          description: date in 2017-09-14 (YYYY-MM-DD)
+          required: true
+          type: string
+        - in: query
+          name: end_date
+          description: date in 2017-09-14 (YYYY-MM-DD)
+          required: true
+          type: string
+      responses:
+        '200':
+          description: success
+        '400':
+          description: Bad request
+        '401':
+          description: >-
+            unauthorized - authentication credentials were not provided or
+            invalid
+      security:
+        - api_key: []
+  /access/services/:
+    get:
+      summary: Returns the services the user has access to.
+      tags:
+        - client
+      responses:
+        '200':
+          description: success
+        '400':
+          description: Bad request
+        '401':
+          description: >-
+            unauthorized - authentication credentials were not provided or
+            invalid
+      security:
+        - api_key: []
+  /report/client-requests/:
+    get:
+      summary: Returns the amount of requests from each client.
+      description: >-
+        Returns the amount of requests from each client in the given date
+        range. 
+      tags:
+        - service
+      parameters:
+        - in: query
+          name: start_date
+          description: date in 2017-09-14 (YYYY-MM-DD)
+          required: true
+          type: string
+        - in: query
+          name: end_date
+          description: date in 2017-09-14 (YYYY-MM-DD)
+          required: true
+          type: string
+      responses:
+        '200':
+          description: success
+        '400':
+          description: Bad request
+        '401':
+          description: >-
+            unauthorized - authentication credentials were not provided or
+            invalid
+      security:
+        - api_key: []
+definitions:
+  UserToken:
+    type: object
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+  UserSignup:
+    type: object
+    properties:
+      username:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: Authorization
+    in: header
