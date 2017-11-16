@@ -1,7 +1,7 @@
 {
 	"swagger": "2.0",
 	"info": {
-		"description": "This service offers an API where traffic events and traffic incidents (like traffic jam, accidents, ...) can be reported by road users",
+		"description": "Mit diesem Service können Nutzer Verkehrsereignisse (z.B. Stau, Unfall etc.) posten und einsehen.\n\nThis service provides an API where users can report and query traffic incidents (like traffic jam, accidents etc.)\n",
 		"version": "1.0",
 		"title": "ExCELL Crowdsourcing Event Manager",
 		"contact": {
