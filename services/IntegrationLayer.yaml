@@ -1,7 +1,16 @@
 swagger: '2.0'
 info:
   title: ExCell DLR Integration Layer
-  description: API Documentation of the ExCell DLR Integration Layer
+  description: >-
+    API Documentation of the ExCell DLR Integration Layer
+    Die sogenannte Integration Layer bietet dem Entwickler eine Schnittstelle zu den 
+    verschiedenen Services. Über einen Signup kann ein Account erstellt werden. Diesem
+    Account wird ein Webtoken zugeordnet, der über den Authorisierungsendpoint abgerufen
+    werden kann. Dieser Token ist nötig, um sich auf der Integration Layer und den einzelnen
+    Services zu authorisieren.
+    Die Integration Layer selbst bietet darüber hinaus weitere Möglichkeiten.
+    Zum Beispiel kann die Anzahl an Requests zu den verschiedenen Services innerhalb einer gewissen
+    Periode aufgerufen werden. Des weiteren können die momentanen Berechtigungen eingesehen werden.
   version: 1.0.0
 host: 'dlr-integration.minglabs.com'
 schemes:
@@ -17,8 +26,7 @@ paths:
       description: >-
         Returns the webtoken for the user to authenticate with the server. The
         token has to be passed in every request in the 'Authorization' Header
-        with the value 'Token <token>'. A token is only valid for the user-agent
-        used to authenticate.
+        with the value 'Token #token#', where '#token#' is the retrieved token. 
       parameters:
         - in: body
           name: body
