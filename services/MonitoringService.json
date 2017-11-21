@@ -1,1 +1,200 @@
-{"swagger":"2.0","info":{"description":"Diese API liefert einen Status-Report für ein getracktes Gerät A in Hinblick auf das Erreichen eines Ortes B. Der Report besteht aus mehreren Elementen: Die Koordinaten der aktuellen Position, die vorgeschlagene Route zum Ziel, die errechnete Verspätung und eine Meldung ob B erreicht ist. Intern fragt der Monitoring Service die aktuelle Postion des Gerätes über den ExCELL Tracking Service ab. Die verwendete deviceID muss dafür im Tracking Service hinterlegt sein.\n\nThis API provides a status report for a monitored device A with regards to a target location B. It returns the coordinates of locations A and B, the proposed route between them, calculates the delay and tells you when B is reached. Internally the Monitoring Service queries the ExCELL Tracking Service for the current position. Please, make sure that the ID used here as first parameter also exists in the Tracking Service.\n","version":"Version 1.0","title":"ExCELL Monitoring API","termsOfService":"Use only for testing","contact":{"name":"Felix Kunde, Stephan Pieper","url":"https://projekt.beuth-hochschule.de/magda/poeple","email":"fkunde@beuth-hochschule"},"license":{"name":"Apache 2","url":"http://www.apache.org/licenses/LICENSE-2.0"}},"host":"dlr-integration.minglabs.com/api/v1/service-request/monitoringservice","basePath":"/","tags":[{"name":"monitoring-controller","description":"Monitoring Controller"}],"schemes":["https"],"paths":{"/v1/monitoring":{"get":{"tags":["monitoring-controller"],"summary":"Get status report using current position of monitored device","description":"Erstellt Status-Report für deviceID","operationId":"monitoringUsingGET","consumes":["application/json"],"produces":["application/json","*/*"],"parameters":[{"name":"deviceId","in":"query","description":"Id of monitored device (use 'demo' to see test result)","required":false,"type":"string"},{"name":"timestamp","in":"query","description":"Unix timestamp of upcoming appointment","required":false,"type":"integer","default":1483225200,"format":"int64"},{"name":"appointmentLat","in":"query","description":"Latitude of upcoming appointment","required":false,"type":"number","default":51.029,"format":"double"},{"name":"appointmentLon","in":"query","description":"Longitude of upcoming appointment","required":false,"type":"number","default":13.736,"format":"double"},{"name":"delay","in":"query","description":"Known current delay in minutes","required":false,"type":"integer","default":5,"format":"int32"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Report"}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"security":[{"api_key":["global"]}]}}},"securityDefinitions":{"api_key":{"type":"apiKey","name":"Authorization","in":"header"}},"definitions":{"GeoPoint":{"type":"object","required":["latitude","longitude"],"properties":{"latitude":{"type":"number","format":"double","description":"Latitude coordinate in WGS84"},"longitude":{"type":"number","format":"double","description":"Longitude coordinate in WGS84"}}},"Report":{"type":"object","required":["delayInMin","expectedTimeOfArrival","position","routeNext","timeStatus","workingStatus"],"properties":{"delayInMin":{"type":"integer","format":"int32","description":"Calculated delay in minutes + delay by user input"},"expectedTimeOfArrival":{"type":"string","format":"date-time","description":"Timestamp for expected arrival at destination"},"minAtAppointment":{"type":"integer","format":"int32","description":"Similar to 'since' attribute in working status (deprecated)"},"position":{"description":"The current position of the monitored device","$ref":"#/definitions/GeoPoint"},"routeNext":{"type":"array","description":"Route to given location (appointment)","items":{"type":"number","format":"double"}},"routeTotal":{"type":"array","description":"The planned route for the entire day. Worked only in conjuction with calendar service (deprecated)","items":{"type":"number","format":"double"}},"timeStatus":{"type":"string","description":"If delay is bigger than 5min, monitored device is classified as delayed","enum":["IN_TIME","DELAYED","UNKNOWN"]},"workingStatus":{"description":"Consists of two values: A text classifier and a date (more details below)","$ref":"#/definitions/WorkingStatus"}}},"WorkingStatus":{"type":"object","properties":{"locationStatus":{"type":"string","enum":["AT_APPOINTMENT","ON_THE_MOVE","UNKNOWN"]},"since":{"type":"string","format":"date-time","description":"Date since when the status has not been changed (deprecated)"}}}}}
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "Diese API liefert einen Status-Report für ein getracktes Gerät A in Hinblick auf das Erreichen eines Ortes B. Der Report besteht aus mehreren Elementen: Die Koordinaten der aktuellen Position, die vorgeschlagene Route zum Ziel, die errechnete Verspätung und eine Meldung ob B erreicht ist. Intern fragt der Monitoring Service die aktuelle Postion des Gerätes über den ExCELL Tracking Service ab. Die verwendete deviceID muss dafür im Tracking Service hinterlegt sein.\n\nThis API provides a status report for a monitored device A with regards to a target location B. It returns the coordinates of locations A and B, the proposed route between them, calculates the delay and tells you when B is reached. Internally the Monitoring Service queries the ExCELL Tracking Service for the current position. Please, make sure that the ID used here as first parameter also exists in the Tracking Service.\n",
+		"version": "Version 1.0",
+		"title": "ExCELL Monitoring API",
+		"termsOfService": "Use only for testing",
+		"contact": {
+			"name": "Felix Kunde, Stephan Pieper",
+			"url": "https://projekt.beuth-hochschule.de/magda/poeple",
+			"email": "fkunde@beuth-hochschule"
+		},
+		"license": {
+			"name": "Apache 2",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0"
+		}
+	},
+	"host": "dlr-integration.minglabs.com/api/v1/service-request/monitoringservice/",
+	"basePath": "/",
+	"tags": [{
+		"name": "monitoring-controller",
+		"description": "Monitoring Controller"
+	}],
+	"schemes": ["https"],
+	"paths": {
+		"/v1/monitoring": {
+			"get": {
+				"tags": ["monitoring-controller"],
+				"summary": "Get status report using current position of monitored device",
+				"description": "Erstellt Status-Report für deviceID",
+				"operationId": "monitoringUsingGET",
+				"consumes": ["application/json"],
+				"produces": ["application/json",
+				"*/*"],
+				"parameters": [{
+					"name": "deviceId",
+					"in": "query",
+					"description": "Id of monitored device (use 'demo' to see test result)",
+					"required": false,
+					"type": "string"
+				},
+				{
+					"name": "timestamp",
+					"in": "query",
+					"description": "Unix timestamp of upcoming appointment",
+					"required": false,
+					"type": "integer",
+					"default": 1483225200,
+					"format": "int64"
+				},
+				{
+					"name": "appointmentLat",
+					"in": "query",
+					"description": "Latitude of upcoming appointment",
+					"required": false,
+					"type": "number",
+					"default": 51.029,
+					"format": "double"
+				},
+				{
+					"name": "appointmentLon",
+					"in": "query",
+					"description": "Longitude of upcoming appointment",
+					"required": false,
+					"type": "number",
+					"default": 13.736,
+					"format": "double"
+				},
+				{
+					"name": "delay",
+					"in": "query",
+					"description": "Known current delay in minutes",
+					"required": false,
+					"type": "integer",
+					"default": 5,
+					"format": "int32"
+				}],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/Report"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"security": [{
+					"api_key": ["global"]
+				}]
+			}
+		}
+	},
+	"securityDefinitions": {
+		"api_key": {
+			"type": "apiKey",
+			"name": "Authorization",
+			"in": "header"
+		}
+	},
+	"definitions": {
+		"GeoPoint": {
+			"type": "object",
+			"required": ["latitude",
+			"longitude"],
+			"properties": {
+				"latitude": {
+					"type": "number",
+					"format": "double",
+					"description": "Latitude coordinate in WGS84"
+				},
+				"longitude": {
+					"type": "number",
+					"format": "double",
+					"description": "Longitude coordinate in WGS84"
+				}
+			}
+		},
+		"Report": {
+			"type": "object",
+			"required": ["delayInMin",
+			"expectedTimeOfArrival",
+			"position",
+			"routeNext",
+			"timeStatus",
+			"workingStatus"],
+			"properties": {
+				"delayInMin": {
+					"type": "integer",
+					"format": "int32",
+					"description": "Calculated delay in minutes + delay by user input"
+				},
+				"expectedTimeOfArrival": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Timestamp for expected arrival at destination"
+				},
+				"minAtAppointment": {
+					"type": "integer",
+					"format": "int32",
+					"description": "Similar to 'since' attribute in working status (deprecated)"
+				},
+				"position": {
+					"description": "The current position of the monitored device",
+					"$ref": "#/definitions/GeoPoint"
+				},
+				"routeNext": {
+					"type": "array",
+					"description": "Route to given location (appointment)",
+					"items": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"routeTotal": {
+					"type": "array",
+					"description": "The planned route for the entire day. Worked only in conjuction with calendar service (deprecated)",
+					"items": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"timeStatus": {
+					"type": "string",
+					"description": "If delay is bigger than 5min, monitored device is classified as delayed",
+					"enum": ["IN_TIME",
+					"DELAYED",
+					"UNKNOWN"]
+				},
+				"workingStatus": {
+					"description": "Consists of two values: A text classifier and a date (more details below)",
+					"$ref": "#/definitions/WorkingStatus"
+				}
+			}
+		},
+		"WorkingStatus": {
+			"type": "object",
+			"properties": {
+				"locationStatus": {
+					"type": "string",
+					"enum": ["AT_APPOINTMENT",
+					"ON_THE_MOVE",
+					"UNKNOWN"]
+				},
+				"since": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Date since when the status has not been changed (deprecated)"
+				}
+			}
+		}
+	}
+}
