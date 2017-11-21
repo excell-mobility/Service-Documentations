@@ -1,1 +1,103 @@
-{"swagger":"2.0","info":{"description":"Diese API ist dafür gedacht datenschutzrechtlich kritische GPS Daten zu anonymisieren. Sie wird u.a. intern im Tracking Service verwendet. Der Dienst anonymisiert die Start- und Endpunkte sowie Zwischenhaltestellen der GPS Tracks, um keine Rückschlüsse auf persönliche Informationen wie Adressen zu ermöglichen.\n\nThis API takes individual GPS tracks and removes properties which are critical in terms of user privacy. It is also used internally by the ExCELL Tracking Service. Start and end points as well as intermediate stops are edited to avoid tracing back personal information such as addresses.\n","version":"Version 1.0","title":"ExCELL Track Anonymization API","termsOfService":"Use only for testing","contact":{"name":"Felix Kunde, Stephan Pieper","url":"https://projekt.beuth-hochschule.de/magda/poeple","email":"spieper@beuth-hochschule"},"license":{"name":"Apache 2","url":"http://www.apache.org/licenses/LICENSE-2.0"}},"host":"dlr-integration.minglabs.com/api/v1/service-request/anonymizationservice","basePath":"/","tags":[{"name":"anonymization-controller","description":"Anonymization Controller"}],"schemes":["https"],"paths":{"/v1/anonymization":{"post":{"tags":["anonymization-controller"],"summary":"Anonymize tracking data","operationId":"schedulingcareUsingPOST","consumes":["application/json"],"produces":["application/json","*/*"],"parameters":[{"in":"body","name":"jsonObjectInput","description":"JSON object with tracking data points","required":false,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/TrackingDate"}},"201":{"description":"Created"},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"security":[{"api_key":["global"]}]}}},"securityDefinitions":{"api_key":{"type":"apiKey","name":"Authorization","in":"header"}},"definitions":{"GeoPoint":{"type":"object","properties":{"latitude":{"type":"number","format":"double"},"longitude":{"type":"number","format":"double"}}},"TrackingDate":{"type":"object","properties":{"point":{"$ref":"#/definitions/GeoPoint"},"timestamp":{"type":"integer","format":"int64"}}}}}
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "Diese API ist dafür gedacht datenschutzrechtlich kritische GPS Daten zu anonymisieren. Sie wird u.a. intern im Tracking Service verwendet. Der Dienst anonymisiert die Start- und Endpunkte sowie Zwischenhaltestellen der GPS Tracks, um keine Rückschlüsse auf persönliche Informationen wie Adressen zu ermöglichen.\n\nThis API takes individual GPS tracks and removes properties which are critical in terms of user privacy. It is also used internally by the ExCELL Tracking Service. Start and end points as well as intermediate stops are edited to avoid tracing back personal information such as addresses.\n",
+		"version": "Version 1.0",
+		"title": "ExCELL Track Anonymization API",
+		"termsOfService": "Use only for testing",
+		"contact": {
+			"name": "Felix Kunde, Stephan Pieper",
+			"url": "https://projekt.beuth-hochschule.de/magda/poeple",
+			"email": "spieper@beuth-hochschule"
+		},
+		"license": {
+			"name": "Apache 2",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0"
+		}
+	},
+	"host": "dlr-integration.minglabs.com",
+	"basePath": "/api/v1/service-request/anonymizationservice",
+	"tags": [{
+		"name": "anonymization-controller",
+		"description": "Anonymization Controller"
+	}],
+	"schemes": ["https"],
+	"paths": {
+		"/v1/anonymization": {
+			"post": {
+				"tags": ["anonymization-controller"],
+				"summary": "Anonymize tracking data",
+				"operationId": "schedulingcareUsingPOST",
+				"consumes": ["application/json"],
+				"produces": ["application/json",
+				"*/*"],
+				"parameters": [{
+					"in": "body",
+					"name": "jsonObjectInput",
+					"description": "JSON object with tracking data points",
+					"required": false,
+					"schema": {
+						"type": "string"
+					}
+				}],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/TrackingDate"
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"security": [{
+					"api_key": []
+				}]
+			}
+		}
+	},
+	"securityDefinitions": {
+		"api_key": {
+			"type": "apiKey",
+			"name": "Authorization",
+			"in": "header"
+		}
+	},
+	"definitions": {
+		"GeoPoint": {
+			"type": "object",
+			"properties": {
+				"latitude": {
+					"type": "number",
+					"format": "double"
+				},
+				"longitude": {
+					"type": "number",
+					"format": "double"
+				}
+			}
+		},
+		"TrackingDate": {
+			"type": "object",
+			"properties": {
+				"point": {
+					"$ref": "#/definitions/GeoPoint"
+				},
+				"timestamp": {
+					"type": "integer",
+					"format": "int64"
+				}
+			}
+		}
+	}
+}

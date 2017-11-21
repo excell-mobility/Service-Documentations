@@ -1,1 +1,191 @@
-{"swagger":"2.0","info":{"description":"Der Routing Service erwartet Hoch- und Rechtswerte für die Start- und Zielkoordinaten. Danach wird eine Liste von GPS Koordinaten zurückgegeben, die den kürzesten Weg repräsentiert. Zur Routenberechnung wird dabei der Dijkstra Algorithmus angewandt.\n\nThis routing service requires a latitude and longitude input for two locations to calculate the shortest route in between. The routing is based on the Dijkstra algorithm.\n","version":"Version 1.0","title":"ExCELL Routing API","termsOfService":"Use only for testing","contact":{"name":"Felix Kunde, Stephan Pieper","url":"https://projekt.beuth-hochschule.de/magda/poeple","email":"fkunde@beuth-hochschule"},"license":{"name":"Apache 2","url":"http://www.apache.org/licenses/LICENSE-2.0"}},"host":"dlr-integration.minglabs.com/api/v1/service-request/routingservice","basePath":"/","tags":[{"name":"routing-controller","description":"Routing Controller"}],"schemes":["https"],"paths":{"/api/v1/routing":{"get":{"tags":["routing-controller"],"summary":"Find fastest route","operationId":"routing1UsingGET","consumes":["application/json"],"produces":["application/json","*/*"],"parameters":[{"name":"startLat","in":"query","description":"Latitude for start coordinate","required":false,"type":"number","default":51.04,"format":"double"},{"name":"startLon","in":"query","description":"Longitude for start coordinate","required":false,"type":"number","default":13.73,"format":"double"},{"name":"endLat","in":"query","description":"Latitude for end coordinate","required":false,"type":"number","default":51.029,"format":"double"},{"name":"endLon","in":"query","description":"Longitude for end coordinate","required":false,"type":"number","default":13.736,"format":"double"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/RoutingResponse"}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"security":[{"api_key":["global"]}]}},"/v1/routing":{"get":{"tags":["routing-controller"],"summary":"Find fastest route","operationId":"routingUsingGET","consumes":["application/json"],"produces":["application/json","*/*"],"parameters":[{"name":"startLat","in":"query","description":"Latitude for start coordinate","required":false,"type":"number","default":51.04,"format":"double"},{"name":"startLon","in":"query","description":"Longitude for start coordinate","required":false,"type":"number","default":13.73,"format":"double"},{"name":"endLat","in":"query","description":"Latitude for end coordinate","required":false,"type":"number","default":51.029,"format":"double"},{"name":"endLon","in":"query","description":"Longitude for end coordinate","required":false,"type":"number","default":13.736,"format":"double"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/RoutingResponse"}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"security":[{"api_key":["global"]}]}}},"securityDefinitions":{"api_key":{"type":"apiKey","name":"Authorization","in":"header"}},"definitions":{"RoutingResponse":{"type":"object","properties":{"distance":{"type":"number","format":"double"},"pointList":{"type":"array","items":{"type":"array","items":{"type":"number","format":"double"}}},"timeInMs":{"type":"integer","format":"int64"}}}}}
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "Der Routing Service erwartet Hoch- und Rechtswerte für die Start- und Zielkoordinaten. Danach wird eine Liste von GPS Koordinaten zurückgegeben, die den kürzesten Weg repräsentiert. Zur Routenberechnung wird dabei der Dijkstra Algorithmus angewandt.\n\nThis routing service requires a latitude and longitude input for two locations to calculate the shortest route in between. The routing is based on the Dijkstra algorithm.\n",
+		"version": "Version 1.0",
+		"title": "ExCELL Routing API",
+		"termsOfService": "Use only for testing",
+		"contact": {
+			"name": "Felix Kunde, Stephan Pieper",
+			"url": "https://projekt.beuth-hochschule.de/magda/poeple",
+			"email": "fkunde@beuth-hochschule"
+		},
+		"license": {
+			"name": "Apache 2",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0"
+		}
+	},
+	"host": "dlr-integration.minglabs.com",
+	"basePath": "/api/v1/service-request/routingservice",
+	"tags": [{
+		"name": "routing-controller",
+		"description": "Routing Controller"
+	}],
+	"schemes": ["https"],
+	"paths": {
+		"/api/v1/routing": {
+			"get": {
+				"tags": ["routing-controller"],
+				"summary": "Find fastest route",
+				"operationId": "routing1UsingGET",
+				"consumes": ["application/json"],
+				"produces": ["application/json",
+				"*/*"],
+				"parameters": [{
+					"name": "startLat",
+					"in": "query",
+					"description": "Latitude for start coordinate",
+					"required": false,
+					"type": "number",
+					"default": 51.04,
+					"format": "double"
+				},
+				{
+					"name": "startLon",
+					"in": "query",
+					"description": "Longitude for start coordinate",
+					"required": false,
+					"type": "number",
+					"default": 13.73,
+					"format": "double"
+				},
+				{
+					"name": "endLat",
+					"in": "query",
+					"description": "Latitude for end coordinate",
+					"required": false,
+					"type": "number",
+					"default": 51.029,
+					"format": "double"
+				},
+				{
+					"name": "endLon",
+					"in": "query",
+					"description": "Longitude for end coordinate",
+					"required": false,
+					"type": "number",
+					"default": 13.736,
+					"format": "double"
+				}],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/RoutingResponse"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"security": [{
+					"api_key": []
+				}]
+			}
+		},
+		"/v1/routing": {
+			"get": {
+				"tags": ["routing-controller"],
+				"summary": "Find fastest route",
+				"operationId": "routingUsingGET",
+				"consumes": ["application/json"],
+				"produces": ["application/json",
+				"*/*"],
+				"parameters": [{
+					"name": "startLat",
+					"in": "query",
+					"description": "Latitude for start coordinate",
+					"required": false,
+					"type": "number",
+					"default": 51.04,
+					"format": "double"
+				},
+				{
+					"name": "startLon",
+					"in": "query",
+					"description": "Longitude for start coordinate",
+					"required": false,
+					"type": "number",
+					"default": 13.73,
+					"format": "double"
+				},
+				{
+					"name": "endLat",
+					"in": "query",
+					"description": "Latitude for end coordinate",
+					"required": false,
+					"type": "number",
+					"default": 51.029,
+					"format": "double"
+				},
+				{
+					"name": "endLon",
+					"in": "query",
+					"description": "Longitude for end coordinate",
+					"required": false,
+					"type": "number",
+					"default": 13.736,
+					"format": "double"
+				}],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/RoutingResponse"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"security": [{
+					"api_key": ["global"]
+				}]
+			}
+		}
+	},
+	"securityDefinitions": {
+		"api_key": {
+			"type": "apiKey",
+			"name": "Authorization",
+			"in": "header"
+		}
+	},
+	"definitions": {
+		"RoutingResponse": {
+			"type": "object",
+			"properties": {
+				"distance": {
+					"type": "number",
+					"format": "double"
+				},
+				"pointList": {
+					"type": "array",
+					"items": {
+						"type": "array",
+						"items": {
+							"type": "number",
+							"format": "double"
+						}
+					}
+				},
+				"timeInMs": {
+					"type": "integer",
+					"format": "int64"
+				}
+			}
+		}
+	}
+}

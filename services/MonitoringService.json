@@ -15,8 +15,8 @@
 			"url": "http://www.apache.org/licenses/LICENSE-2.0"
 		}
 	},
-	"host": "dlr-integration.minglabs.com/api/v1/service-request/monitoringservice/",
-	"basePath": "/",
+	"host": "dlr-integration.minglabs.com",
+	"basePath": "/api/v1/service-request/monitoringservice",
 	"tags": [{
 		"name": "monitoring-controller",
 		"description": "Monitoring Controller"
@@ -93,7 +93,7 @@
 					}
 				},
 				"security": [{
-					"api_key": ["global"]
+					"api_key": []
 				}]
 			}
 		}
