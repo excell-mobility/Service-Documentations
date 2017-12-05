@@ -3,7 +3,7 @@
 	"info": {
 		"description": "Mit diesem Service können Nutzer Verkehrsereignisse (z.B. Stau, Unfall etc.) posten und einsehen.\n\nThis service provides an API where users can report and query traffic incidents (like traffic jam, accidents etc.)\n",
 		"version": "1.0",
-		"title": "ExCELL Crowdsourcing Event Manager",
+		"title": "ExCELL Crowdsourcing Event Manager API",
 		"contact": {
 			"name": "TU Dresden - Chair of Traffic Control and Process Automatisation",
 			"url": "http://tu-dresden.de/vlp",
