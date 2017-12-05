@@ -2,11 +2,11 @@
 	"swagger": "2.0",
 	"info": {
 		"description": "Diese API liefert eine Liste von möglichen Zeitfenstern für Termine oder Dienstleistungen, basierend auf Routenoptimierung. Die Hauptanwendungsfälle für den Tourenplanungsalgorithmus sind einerseits das Pflegeszenario und andererseits das Logistikszenario. Für das Pflegeszenario werden Fahrzeuge und dazugehörige Pflegedienstleistungen optimiert, wohingegen für das Logistikszenario Fahrzeuge und Kundentermine analysiert werden. Der Tourenplanungsalgorithmus nimmt für die obigen Anwendungsfälle JSON entgegen und generiert JSON als Rückgabe.\n\nThe Scheduling API is designed to optimize the route of a trip with multiple stops. It offers two endpoints which follow different purposes:\nschedulingnew finds the best fit for a new appointment into a given schedule of existing appointments (JSON array).\nschedulingcare plans the complete schedules for multiple cars. Therefore, it requires a detailed description (JSON) about different client constraints.\n",
-		"version": "Version 1.0",
+		"version": "1.0",
 		"title": "ExCELL Scheduling API",
 		"termsOfService": "Use only for testing",
 		"contact": {
-			"name": "Stephan Pieper, Felix Kunde",
+			"name": "Beuth Hochschule für Technik Berlin - Labor für Rechner- und Informationssysteme - MAGDa Gruppe",
 			"url": "https://projekt.beuth-hochschule.de/magda/poeple",
 			"email": "spieper@beuth-hochschule"
 		},

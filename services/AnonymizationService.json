@@ -2,11 +2,11 @@
 	"swagger": "2.0",
 	"info": {
 		"description": "Diese API ist dafür gedacht datenschutzrechtlich kritische GPS Daten zu anonymisieren. Sie wird u.a. intern im Tracking Service verwendet. Der Dienst anonymisiert die Start- und Endpunkte sowie Zwischenhaltestellen der GPS Tracks, um keine Rückschlüsse auf persönliche Informationen wie Adressen zu ermöglichen.\n\nThis API takes individual GPS tracks and removes properties which are critical in terms of user privacy. It is also used internally by the ExCELL Tracking Service. Start and end points as well as intermediate stops are edited to avoid tracing back personal information such as addresses.\n",
-		"version": "Version 1.0",
+		"version": "1.0",
 		"title": "ExCELL Track Anonymization API",
 		"termsOfService": "Use only for testing",
 		"contact": {
-			"name": "Felix Kunde, Stephan Pieper",
+			"name": "Beuth Hochschule für Technik Berlin - Labor für Rechner- und Informationssysteme - MAGDa Gruppe",
 			"url": "https://projekt.beuth-hochschule.de/magda/poeple",
 			"email": "spieper@beuth-hochschule"
 		},

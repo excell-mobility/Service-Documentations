@@ -2,13 +2,13 @@
 	"swagger": "2.0",
 	"info": {
 		"description": "Diese API stellt das Gerüst (JSON) für eine Kachel-basierte Heatmap Visualisierung für das ExCELL Testgebiet Dresden zur Verfügung. Die Kacheln zeigen die durchschnittliche Geschwindigkeit und die aggregierte Anzahl der Fahrzeuge. Es ist hierbei möglich das Datum und zusätzliche Optionen auszuwählen, um die Ausgabe der Kacheln zu individualisieren.\n\nThis API provides a tiled set of attributes (JSON) to create a heatmap visualization for the ExCELL test area - the city of Dresden. The tiles present an aggregated view on the average speed and count of tracked vehicles. The service allows for changing the date and the size of the tiles.\n",
-		"version": "Version 1.0",
+		"version": "1.0",
 		"title": "ExCELL Heatmap API",
 		"termsOfService": "Use only for testing",
 		"contact": {
-			"name": "Felix Kunde, Stephan Pieper, Sebastian Urbanek",
+			"name": "Beuth Hochschule für Technik Berlin - Labor für Rechner- und Informationssysteme - MAGDa Gruppe",
 			"url": "https://projekt.beuth-hochschule.de/magda/poeple",
-			"email": "s61811@beuth-hochschule.de"
+			"email": "spieper@beuth-hochschule.de"
 		},
 		"license": {
 			"name": "Apache 2",

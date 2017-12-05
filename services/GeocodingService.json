@@ -2,11 +2,11 @@
 	"swagger": "2.0",
 	"info": {
 		"description": "Die Geocoding API bietet je zwei Endpunkte (Wrapper um die bekannten OpenStreetMap Geocoder Nominatim und Photon), um Text-basierte Adressen in GPS Koordinaten umzuwandelnd und umgekehrt. Geocoding wird benötigt wenn z.B. aus Kundenadressen Zielkoordinaten für das Routing erstellt werden müssen.\n\nThe Geocoding API provides two endpoints (wrapper for the well-known OpenStreetMap geocoder Nominatim and Photon) to transform text-based addresses into GPS coordinates and vice versa. Geocoding is necessary e.g. for converting a client address into a routing destination.\n",
-		"version": "Version 1.0",
+		"version": "1.0",
 		"title": "ExCELL Geocoding API",
 		"termsOfService": "Use only for testing",
 		"contact": {
-			"name": "Felix Kunde, Stephan Pieper",
+			"name": "Beuth Hochschule für Technik Berlin - Labor für Rechner- und Informationssysteme - MAGDa Gruppe",
 			"url": "https://projekt.beuth-hochschule.de/magda/poeple",
 			"email": "fkunde@beuth-hochschule"
 		},
