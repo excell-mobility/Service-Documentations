@@ -3,7 +3,7 @@
 	"info": {
 		"description": "Über die Tracking API können GPS Positionsdaten in die ExCELL Plattform überführt werden. Die Übergabe kann in verschiedenen zeitlichen Intervallen erfolgen, z.B. sekündlich oder in aggregierten Batches. Die Trackingdaten werden intern auf das OpenStreetMap-Straßennetz projiziert (Map Matching) und danach geometrisch anonymisiert. Sie dienen zur Verkehrsanalyse.\n\nThis service provides an API to upload GPS position data. The service is able to receive single measurements for each seconds or batches of points collected for e.g. one minute. The uploaded data will be anonymized, map-matched and used for traffic data analysis.\n",
 		"version": "1.0",
-		"title": "ExCELL Tracking Service",
+		"title": "ExCELL Tracking API",
 		"contact": {
 			"name": "TU Dresden - Chair of Traffic Control and Process Automatisation",
 			"url": "http://tu-dresden.de/vlp",
