@@ -94,6 +94,21 @@ paths:
           description: >-
             unauthorized - authentication credentials were not provided or
             invalid
+  /tokenauth/forgot-password/:
+    post:
+      summary: Starts forgot password workflow (via email user validation)
+      parameters:
+        - in: body
+          name: body
+          description: username
+          required: true
+          schema:
+            $ref: '#/definitions/UserForgotPassword'
+      tags:
+        - user
+      responses:
+        '200':
+          description: success
   /tokenauth/signup/:
     post:
       summary: Signup for new user
@@ -220,6 +235,11 @@ definitions:
       old_password:
         type: string
       password:
+        type: string
+  UserForgotPassword:
+    type: object
+    properties:
+      username:
         type: string
 securityDefinitions:
   api_key:
