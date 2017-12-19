@@ -1,8 +1,8 @@
 swagger: '2.0'
 info:
-  title: ExCell DLR Integration Layer
+  title: ExCell Integration Layer
   description: >-
-    API Documentation of the ExCell DLR Integration Layer
+    API Dokumentation für die ExCell Integration Layer.
     Die sogenannte Integration Layer bietet dem Entwickler eine Schnittstelle zu den 
     verschiedenen Services. Über einen Signup kann ein Account erstellt werden. Diesem
     Account wird ein Webtoken zugeordnet, der über den Authorisierungsendpoint abgerufen
@@ -14,7 +14,6 @@ info:
   version: 1.0.0
 host: 'dlr-integration.minglabs.com'
 schemes:
-  - http
   - https
 basePath: /api/v1
 produces:
@@ -76,6 +75,25 @@ paths:
             invalid
       security:
         - api_key: []
+  /tokenauth/change-password/:
+    post:
+      summary: Changes user password
+      parameters:
+        - in: body
+          name: body
+          description: old and new password
+          required: true
+          schema:
+            $ref: '#/definitions/UserChangePassword'
+      tags:
+        - user
+      responses:
+        '200':
+          description: success
+        '401':
+          description: >-
+            unauthorized - authentication credentials were not provided or
+            invalid
   /tokenauth/signup/:
     post:
       summary: Signup for new user
@@ -183,6 +201,23 @@ definitions:
       username:
         type: string
       email:
+        type: string
+      password:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      company:
+        type: string
+      phone_number:
+        type: string
+      position:
+        type: string
+  UserChangePassword:
+    type: object
+    properties:
+      old_password:
         type: string
       password:
         type: string
