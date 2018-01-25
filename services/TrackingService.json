@@ -3,15 +3,15 @@
 	"info": {
 		"description": "Über die Tracking API können GPS Positionsdaten in die ExCELL Plattform überführt werden. Die Übergabe kann in verschiedenen zeitlichen Intervallen erfolgen, z.B. sekündlich oder in aggregierten Batches. Die Trackingdaten werden intern auf das OpenStreetMap-Straßennetz projiziert (Map Matching) und danach geometrisch anonymisiert. Sie dienen zur Verkehrsanalyse.\n\nThis service provides an API to upload GPS position data. The service is able to receive single measurements for each seconds or batches of points collected for e.g. one minute. The uploaded data will be anonymized, map-matched and used for traffic data analysis.\n",
 		"version": "1.0",
-		"title": "ExCELL Tracking API",
+		"title": "ExCELL Tracking Service",
 		"contact": {
 			"name": "TU Dresden - Chair of Traffic Control and Process Automatisation",
 			"url": "http://tu-dresden.de/vlp",
 			"email": "henning.jeske@tu-dresden.de"
 		}
 	},
-	"host": "excell.vkw.tu-dresden.de:20080",
-	"basePath": "/",
+	"host": "dlr-integration.minglabs.com",
+	"basePath": "/api/v1/service-request/trackingservice",
 	"tags": [
 		{
 			"name": "tracking-service-controller",
@@ -26,12 +26,9 @@
 				,
 				"summary": "Get last tracking information for one or more IDs",
 				"operationId": "getPositionDataUsingGET",
-				"consumes": [
-					"application/json"]
-				,
 				"produces": [
-					"application/json",
-					"*/*"]
+					"*/*",
+					"application/json"]
 				,
 				"parameters": [
 					{
@@ -65,7 +62,12 @@
 					"404": {
 						"description": "Not Found"
 					}
-				}
+				},
+				"security": [
+					{
+						"api_key": [
+						]
+					}]
 			}
 		},
 		"/TrackingService/putPositionData/{appId}/{id}": {
@@ -79,8 +81,8 @@
 					"application/json"]
 				,
 				"produces": [
-					"application/json",
-					"*/*"]
+					"*/*",
+					"application/json"]
 				,
 				"parameters": [
 					{
@@ -129,8 +131,20 @@
 					"404": {
 						"description": "Not Found"
 					}
-				}
+				},
+				"security": [
+					{
+						"api_key": [
+						]
+					}]
 			}
+		}
+	},
+	"securityDefinitions": {
+		"api_key": {
+			"type": "apiKey",
+			"name": "Authorization",
+			"in": "header"
 		}
 	},
 	"definitions": {
@@ -171,7 +185,8 @@
 				"tmode": {
 					"type": "string"
 				}
-			}
+			},
+			"title": "FullGpsRecord"
 		},
 		"SimpleGpsRecord": {
 			"type": "object",
@@ -191,7 +206,8 @@
 					"type": "number",
 					"format": "double"
 				}
-			}
+			},
+			"title": "SimpleGpsRecord"
 		}
 	}
 }
