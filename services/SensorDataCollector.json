@@ -10,9 +10,13 @@
 			"email": "henning.jeske@tu-dresden.de"
 		}
 	},
-	"host": "excell.vkw.tu-dresden.de:20080",
-	"basePath": "/",
+	"host": "dlr-integration.minglabs.com",
+	"basePath": "/api/v1/service-request/sensordatacollector",
 	"tags": [
+		{
+			"name": "health-mvc-endpoint",
+			"description": "Health Mvc Endpoint"
+		},
 		{
 			"name": "sensor-data-collector",
 			"description": "Sensor Data Collector"
@@ -30,8 +34,8 @@
 					"application/json"]
 				,
 				"produces": [
-					"application/json",
-					"*/*"]
+					"*/*",
+					"application/json"]
 				,
 				"parameters": [
 					{
@@ -70,6 +74,13 @@
 						"required": true,
 						"type": "number",
 						"format": "double"
+					},
+					{
+						"name": "edgeId",
+						"in": "query",
+						"description": "edgeId",
+						"required": true,
+						"type": "string"
 					}]
 				,
 				"responses": {
@@ -92,7 +103,12 @@
 					"404": {
 						"description": "Not Found"
 					}
-				}
+				},
+				"security": [
+					{
+						"api_key": [
+						]
+					}]
 			}
 		},
 		"/SensorDataCollector/createSensorGk": {
@@ -106,8 +122,8 @@
 					"application/json"]
 				,
 				"produces": [
-					"application/json",
-					"*/*"]
+					"*/*",
+					"application/json"]
 				,
 				"parameters": [
 					{
@@ -146,6 +162,13 @@
 						"required": true,
 						"type": "integer",
 						"format": "int32"
+					},
+					{
+						"name": "edgeId",
+						"in": "query",
+						"description": "edgeId",
+						"required": true,
+						"type": "string"
 					}]
 				,
 				"responses": {
@@ -168,7 +191,12 @@
 					"404": {
 						"description": "Not Found"
 					}
-				}
+				},
+				"security": [
+					{
+						"api_key": [
+						]
+					}]
 			}
 		},
 		"/SensorDataCollector/getId": {
@@ -178,12 +206,9 @@
 				,
 				"summary": "Get the Sensor-ID",
 				"operationId": "getIdUsingGET",
-				"consumes": [
-					"application/json"]
-				,
 				"produces": [
-					"application/json",
-					"*/*"]
+					"*/*",
+					"application/json"]
 				,
 				"parameters": [
 					{
@@ -211,7 +236,82 @@
 					"404": {
 						"description": "Not Found"
 					}
-				}
+				},
+				"security": [
+					{
+						"api_key": [
+						]
+					}]
+			}
+		},
+		"/SensorDataCollector/health": {
+			"get": {
+				"tags": [
+					"health-mvc-endpoint"]
+				,
+				"summary": "invoke",
+				"operationId": "invokeUsingGET",
+				"produces": [
+					"application/vnd.spring-boot.actuator.v1+json",
+					"application/json"]
+				,
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"security": [
+					{
+						"api_key": [
+						]
+					}]
+			}
+		},
+		"/SensorDataCollector/health.json": {
+			"get": {
+				"tags": [
+					"health-mvc-endpoint"]
+				,
+				"summary": "invoke",
+				"operationId": "invokeUsingGET_1",
+				"produces": [
+					"application/vnd.spring-boot.actuator.v1+json",
+					"application/json"]
+				,
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"security": [
+					{
+						"api_key": [
+						]
+					}]
 			}
 		},
 		"/SensorDataCollector/newData": {
@@ -225,8 +325,8 @@
 					"application/json"]
 				,
 				"produces": [
-					"application/json",
-					"*/*"]
+					"*/*",
+					"application/json"]
 				,
 				"parameters": [
 					{
@@ -269,8 +369,20 @@
 					"404": {
 						"description": "Not Found"
 					}
-				}
+				},
+				"security": [
+					{
+						"api_key": [
+						]
+					}]
 			}
+		}
+	},
+	"securityDefinitions": {
+		"api_key": {
+			"type": "apiKey",
+			"name": "Authorization",
+			"in": "header"
 		}
 	}
 }
