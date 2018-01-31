@@ -1,7 +1,7 @@
 {
 	"swagger": "2.0",
 	"info": {
-		"description": "Diese API ist dafür gedacht datenschutzrechtlich kritische GPS Daten zu anonymisieren. Sie wird u.a. intern im Tracking Service verwendet. Der Dienst anonymisiert die Start- und Endpunkte sowie Zwischenhaltestellen der GPS Tracks, um keine Rückschlüsse auf persönliche Informationen wie Adressen zu ermöglichen. Eine Input Beispieldatei als JSON liegt hier: https://projekt.beuth-hochschule.de/fileadmin/projekt/magda/Presentations/Testdaten_Anonymization.json\n\nThis API takes individual GPS tracks and removes properties which are critical in terms of user privacy. It is also used internally by the ExCELL Tracking Service. Start and end points as well as intermediate stops are edited to avoid tracing back personal information such as addresses.\n",
+		"description": "Diese API ist dafür gedacht datenschutzrechtlich kritische GPS Daten zu anonymisieren. Sie wird u.a. intern im Tracking Service verwendet. Der Dienst anonymisiert die Start- und Endpunkte sowie Zwischenhaltestellen der GPS Tracks, um keine Rückschlüsse auf persönliche Informationen wie Adressen zu ermöglichen. \n\n Eine Input Beispieldatei als JSON liegt hier: https://projekt.beuth-hochschule.de/fileadmin/projekt/magda/Presentations/Testdaten_Anonymization.json \n\nThis API takes individual GPS tracks and removes properties which are critical in terms of user privacy. It is also used internally by the ExCELL Tracking Service. Start and end points as well as intermediate stops are edited to avoid tracing back personal information such as addresses.\n",
 		"version": "1.0",
 		"title": "ExCELL Track Anonymization API",
 		"termsOfService": "Use only for testing",
