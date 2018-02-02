@@ -1,7 +1,10 @@
 {
 	"swagger": "2.0",
 	"info": {
-		"description": "Der Routing Service erwartet Hoch- und Rechtswerte für die Start- und Zielkoordinaten. Danach wird eine Liste von GPS Koordinaten zurückgegeben, die den kürzesten Weg repräsentiert. Zur Routenberechnung wird dabei der Dijkstra Algorithmus angewandt.\n\nThis routing service requires a latitude and longitude input for two locations to calculate the shortest route in between. The routing is based on the Dijkstra algorithm.\n",
+		"description": "Der Routing Service erwartet Hoch- und Rechtswerte für die Start- und Zielkoordinaten. Danach wird eine Liste von GPS Koordinaten zurückgegeben, die den kürzesten Weg repräsentiert. Zur Routenberechnung wird dabei der Dijkstra Algorithmus angewandt.\
+				\
+				This routing service requires a latitude and longitude input for two locations to calculate the shortest route in between. The routing is based on the Dijkstra algorithm.\
+                                \",
 		"version": "1.0",
 		"title": "ExCELL Routing API",
 		"termsOfService": "Use only for testing",
