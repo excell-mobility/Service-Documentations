@@ -153,6 +153,58 @@
 				}]
 			}
 		},
+		"/v1/schedulingpickup": {
+			"post": {
+				"tags": [
+					"planning-controller"
+				],
+				"summary": "Generate the scheduling for pickup",
+				"operationId": "schedulingpickupUsingPOST",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json",
+					"*/*"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "jsonObjectInput",
+						"description": "JSON object with pickup and dropoff locations",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/PickupScenarioResponse"
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"security": [
+					{
+						"api_key": []
+					}
+				]
+			}
+		},
 		"/v1/schedulingnew": {
 			"post": {
 				"tags": ["planning-controller"],
@@ -215,7 +267,41 @@
 					"additionalProperties": {
 						"type": "array",
 						"items": {
-							"type": "string"
+							"$ref": "#/definitions/JobProperties"
+						}
+					}
+				}
+			}
+		},
+		"JobProperties": {
+			"type": "object",
+			"properties": {
+				"endJob": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"jobID": {
+					"type": "string"
+				},
+				"serviceTime": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"startJob": {
+					"type": "integer",
+					"format": "int64"
+				}
+			}
+		},
+		"PickupScenarioResponse": {
+			"type": "object",
+			"properties": {
+				"response": {
+					"type": "object",
+					"additionalProperties": {
+						"type": "array",
+						"items": {
+							"$ref": "#/definitions/TransportProperties"
 						}
 					}
 				}
@@ -242,6 +328,26 @@
 				"travelTime": {
 					"type": "integer",
 					"format": "int32"
+				}
+			}
+		},
+		"TransportProperties": {
+			"type": "object",
+			"properties": {
+				"endJob": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"serviceTime": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"startJob": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"transportID": {
+					"type": "string"
 				}
 			}
 		}
