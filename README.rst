@@ -12,6 +12,7 @@ In this repository we collect all [Swagger](https://swagger.io/) service documen
   * SensorDataColletor
   * TrackingService
   * TrafficStateService
+  * TravelTimeService.json
 
 The following link provides an example about how the services should be called via the Integration Layer::
 
