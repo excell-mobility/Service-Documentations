@@ -1,7 +1,7 @@
 Service Documentations
 =======================
 
-In this repository we collect all [Swagger](https://swagger.io/) service documentations of the [ExCELL Developer Portal](https://www.excell-mobility.de/developer/). It contains JSON files for the following services:
+In this repository we collect all `Swagger <https://swagger.io/>` service documentations of the `ExCELL Developer Portal <https://www.excell-mobility.de/developer/>`. It contains JSON files for the following services:
 
   * CsEventManager
   * GeocodingService
