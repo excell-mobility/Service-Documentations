@@ -11,7 +11,7 @@
 		}
 	},
 	"host": "dlr-integration.minglabs.com",
-	"basePath": "/api/v1/service-request/trackingservice",
+	"basePath": "/api/v1/service-request/traveltimeservice",
 	"tags": [
 		{
 			"name": "web-mvc-endpoint-handler-mapping",
