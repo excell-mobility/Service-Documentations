@@ -1,7 +1,7 @@
-Service Dokumentationen
+Service Documentations
 =======================
 
-Beinhaltet momentan die Swagger Dokumentationen für::
+In this repository we collect all `Swagger <https://swagger.io/>`_ service documentations of the `ExCELL Developer Portal <https://www.excell-mobility.de/developer/>`_. It contains JSON files for the following services:
 
   * CsEventManager
   * GeocodingService
@@ -12,25 +12,19 @@ Beinhaltet momentan die Swagger Dokumentationen für::
   * SensorDataColletor
   * TrackingService
   * TrafficStateService
+  * TravelTimeService
 
-Ein Beispiel wie momentan diese Services über die Integration Layer angesprochen werden können befindet sich hier::
+The following link provides an example about how the services should be called via the Integration Layer::
 
   https://dlr-integration.minglabs.com/swagger/API-Example.html
 
-Die Swagger Dokumentation für die Integration Layer befindet sich hier::
+The Swagger documentation for the Integration Layer can be found here::
 
   https://dlr-integration.minglabs.com/swagger/index.html
 
-Die Swagger Dokumentationen für die Services befinden sich unter (case sensitive!)::
-
-  https://dlr-integration.minglabs.com/swagger/index.html?url=<Service_Name>
-
-
-Also zum Beispiel::
+The Swagger documentations of single services can be accessed by adding `?url=<Service_Name>` to the URL (case sensitive!)::
 
   https://dlr-integration.minglabs.com/swagger/index.html?url=GeocodingService.json
-
-für die Geocoding Dokumentation.
 
 
 TODO::

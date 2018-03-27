@@ -1,7 +1,7 @@
 {
 	"swagger": "2.0",
 	"info": {
-		"description": "This service offers an API to upload sensor data from statonary traffic data sensors for different data types",
+		"description": "Mit diesem Service können Sensoren mit einem festen Ortsbezug eingerichtet und regelmäßig mit Messwerten unterschiedlichen Typs versorgt werden.\n\nThis service offers an API to upload sensor data from statonary traffic data sensors for different data types.",
 		"version": "1.0",
 		"title": "ExCELL Sensor Data Collector",
 		"contact": {

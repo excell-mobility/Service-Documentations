@@ -1,0 +1,402 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "Über den TravelTimeService können aktuelle sowie zukünftige Reisezeiten für einzelne Abschnitte sowie zur Zeit für ganz Dresden abgerufen werden. Zurückgegeben werden entweder aktuell gemessene Reisezeiten oder Reisezeiten aus Tagesganglinien. Kann auf keine der Werte zurückgegriffen werden, so werden keine Reisezeiten angegeben, d.h. es werden keine statischen Reisezeiten, resultierend aus zulässiger Höchstgeschwindigkeit und Länge des Elementes, berechnet.\n\n The TravelTimeService can be used to retrieve current and future travel times for individual sections or actual for the whole of Dresden. Returned are either currently measured travel times or travel times from daily gaits. If none of the values can be used, no travel times are indicated, i. E. there are no static travel times, resulting from the maximum speed and length of the element calculated. \n",
+		"version": "1.0",
+		"title": "ExCELL TravelTimeService",
+		"contact": {
+			"name": "TU Dresden - Chair of Traffic Control and Process Automatisation",
+			"url": "http://tu-dresden.de/vlp",
+			"email": "sebastian.pape@tu-dresden.de"
+		}
+	},
+	"host": "dlr-integration.minglabs.com",
+	"basePath": "/api/v1/service-request/traveltimeservice",
+	"tags": [
+		{
+			"name": "web-mvc-endpoint-handler-mapping",
+			"description": "Web Mvc Endpoint Handler Mapping"
+		},
+		{
+			"name": "operation-handler",
+			"description": "Operation Handler"
+		},
+		{
+			"name": "controller",
+			"description": "Controller"
+		}
+	],
+	"paths": {
+		"/TravelTimeService": {
+			"get": {
+				"tags": [
+					"web-mvc-endpoint-handler-mapping"
+				],
+				"summary": "links",
+				"operationId": "linksUsingGET",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json",
+					"application/vnd.spring-boot.actuator.v2+json"
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object",
+							"additionalProperties": {
+								"type": "object",
+								"additionalProperties": {
+									"$ref": "#/definitions/Link"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"security": [
+					{
+						"api_key": []
+					}
+				]
+			}
+		},
+		"/TravelTimeService/getActualTraveltime": {
+			"get": {
+				"tags": [
+					"controller"
+				],
+				"summary": "get the actual traveltime for the relationship from sid to next_sid",
+				"operationId": "getActualTraveltimeUsingGET",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json",
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "sid",
+						"in": "query",
+						"description": "sid",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "next_sid",
+						"in": "query",
+						"description": "next_sid",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "reverse",
+						"in": "query",
+						"description": "reverse",
+						"required": false,
+						"type": "boolean"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/ResponseTraveltime"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"security": [
+					{
+						"api_key": []
+					}
+				]
+			}
+		},
+		"/TravelTimeService/getActualTraveltimeDresden": {
+			"get": {
+				"tags": [
+					"controller"
+				],
+				"summary": "get the actual traveltime for all trafficstreams in dresden",
+				"operationId": "getActualTraveltimeDresdenUsingGET",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json",
+					"*/*"
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/ResponseTraveltime"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"security": [
+					{
+						"api_key": []
+					}
+				]
+			}
+		},
+		"/TravelTimeService/getTraveltime": {
+			"get": {
+				"tags": [
+					"controller"
+				],
+				"summary": "get the traveltime for the relationship from sid to next_sid for the given time",
+				"operationId": "getTraveltimeUsingGET",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json",
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "sid",
+						"in": "query",
+						"description": "sid",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "next_sid",
+						"in": "query",
+						"description": "next_sid",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "reverse",
+						"in": "query",
+						"description": "reverse",
+						"required": false,
+						"type": "boolean"
+					},
+					{
+						"name": "time",
+						"in": "query",
+						"description": "time",
+						"required": false,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/ResponseTraveltime"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"security": [
+					{
+						"api_key": []
+					}
+				]
+			}
+		},
+		"/TravelTimeService/getTraveltimeDresden": {
+			"get": {
+				"tags": [
+					"controller"
+				],
+				"summary": "get the actual traveltime for all trafficstreams in dresden for the given time",
+				"operationId": "getTraveltimeDresdenUsingGET",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json",
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "time",
+						"in": "query",
+						"description": "time",
+						"required": false,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/ResponseTraveltime"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"security": [
+					{
+						"api_key": []
+					}
+				]
+			}
+		},
+		"/TravelTimeService/health": {
+			"get": {
+				"tags": [
+					"operation-handler"
+				],
+				"summary": "handle",
+				"operationId": "handleUsingGET",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json",
+					"application/vnd.spring-boot.actuator.v2+json"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"description": "body",
+						"required": false,
+						"schema": {
+							"type": "object",
+							"additionalProperties": {
+								"type": "string"
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"security": [
+					{
+						"api_key": []
+					}
+				]
+			}
+		}
+	},
+	"securityDefinitions": {
+		"api_key": {
+			"type": "apiKey",
+			"name": "api_key",
+			"in": "header"
+		}
+	},
+	"definitions": {
+		"ResponseTraveltime": {
+			"type": "object",
+			"properties": {
+				"accuracy": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"next_sid": {
+					"type": "string"
+				},
+				"sid": {
+					"type": "string"
+				},
+				"standardDeviation": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"timeValidity": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"traveltime": {
+					"type": "number",
+					"format": "double"
+				}
+			}
+		},
+		"Map«string,Link»": {
+			"type": "object",
+			"additionalProperties": {
+				"$ref": "#/definitions/Link"
+			}
+		},
+		"Link": {
+			"type": "object",
+			"properties": {
+				"href": {
+					"type": "string"
+				},
+				"templated": {
+					"type": "boolean"
+				}
+			}
+		}
+	}
+}
