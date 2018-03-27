@@ -14,16 +14,16 @@
 	"basePath": "/api/v1/service-request/traveltimeservice",
 	"tags": [
 		{
-			"name": "web-mvc-endpoint-handler-mapping",
-			"description": "Web Mvc Endpoint Handler Mapping"
+			"name": "controller",
+			"description": "Controller"
 		},
 		{
 			"name": "operation-handler",
 			"description": "Operation Handler"
 		},
 		{
-			"name": "controller",
-			"description": "Controller"
+			"name": "web-mvc-endpoint-handler-mapping",
+			"description": "Web Mvc Endpoint Handler Mapping"
 		}
 	],
 	"paths": {
@@ -34,9 +34,6 @@
 				],
 				"summary": "links",
 				"operationId": "linksUsingGET",
-				"consumes": [
-					"application/json"
-				],
 				"produces": [
 					"application/json",
 					"application/vnd.spring-boot.actuator.v2+json"
@@ -78,12 +75,9 @@
 				],
 				"summary": "get the actual traveltime for the relationship from sid to next_sid",
 				"operationId": "getActualTraveltimeUsingGET",
-				"consumes": [
-					"application/json"
-				],
 				"produces": [
-					"application/json",
-					"*/*"
+					"*/*",
+					"application/json"
 				],
 				"parameters": [
 					{
@@ -139,12 +133,9 @@
 				],
 				"summary": "get the actual traveltime for all trafficstreams in dresden",
 				"operationId": "getActualTraveltimeDresdenUsingGET",
-				"consumes": [
-					"application/json"
-				],
 				"produces": [
-					"application/json",
-					"*/*"
+					"*/*",
+					"application/json"
 				],
 				"responses": {
 					"200": {
@@ -180,12 +171,9 @@
 				],
 				"summary": "get the traveltime for the relationship from sid to next_sid for the given time",
 				"operationId": "getTraveltimeUsingGET",
-				"consumes": [
-					"application/json"
-				],
 				"produces": [
-					"application/json",
-					"*/*"
+					"*/*",
+					"application/json"
 				],
 				"parameters": [
 					{
@@ -249,12 +237,9 @@
 				],
 				"summary": "get the actual traveltime for all trafficstreams in dresden for the given time",
 				"operationId": "getTraveltimeDresdenUsingGET",
-				"consumes": [
-					"application/json"
-				],
 				"produces": [
-					"application/json",
-					"*/*"
+					"*/*",
+					"application/json"
 				],
 				"parameters": [
 					{
@@ -300,9 +285,6 @@
 				],
 				"summary": "handle",
 				"operationId": "handleUsingGET",
-				"consumes": [
-					"application/json"
-				],
 				"produces": [
 					"application/json",
 					"application/vnd.spring-boot.actuator.v2+json"
@@ -349,11 +331,30 @@
 	"securityDefinitions": {
 		"api_key": {
 			"type": "apiKey",
-			"name": "api_key",
+			"name": "Authorization",
 			"in": "header"
 		}
 	},
 	"definitions": {
+		"Link": {
+			"type": "object",
+			"properties": {
+				"href": {
+					"type": "string"
+				},
+				"templated": {
+					"type": "boolean"
+				}
+			},
+			"title": "Link"
+		},
+		"Map«string,Link»": {
+			"type": "object",
+			"title": "Map«string,Link»",
+			"additionalProperties": {
+				"$ref": "#/definitions/Link"
+			}
+		},
 		"ResponseTraveltime": {
 			"type": "object",
 			"properties": {
@@ -379,24 +380,8 @@
 					"type": "number",
 					"format": "double"
 				}
-			}
-		},
-		"Map«string,Link»": {
-			"type": "object",
-			"additionalProperties": {
-				"$ref": "#/definitions/Link"
-			}
-		},
-		"Link": {
-			"type": "object",
-			"properties": {
-				"href": {
-					"type": "string"
-				},
-				"templated": {
-					"type": "boolean"
-				}
-			}
+			},
+			"title": "ResponseTraveltime"
 		}
 	}
 }
