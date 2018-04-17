@@ -18,22 +18,67 @@
 			"description": "Cs Event Manager"
 		},
 		{
-			"name": "health-mvc-endpoint",
-			"description": "Health Mvc Endpoint"
-		}]
-	,
+			"name": "operation-handler",
+			"description": "Operation Handler"
+		},
+		{
+			"name": "web-mvc-endpoint-handler-mapping",
+			"description": "Web Mvc Endpoint Handler Mapping"
+		}
+	],
 	"paths": {
-		"/CsEventManager/": {
+		"/CsEventManager": {
 			"get": {
 				"tags": [
-					"cs-event-manager"]
-				,
+					"web-mvc-endpoint-handler-mapping"
+				],
+				"summary": "links",
+				"operationId": "linksUsingGET",
+				"produces": [
+					"application/json",
+					"application/vnd.spring-boot.actuator.v2+json"
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object",
+							"additionalProperties": {
+								"type": "object",
+								"additionalProperties": {
+									"$ref": "#/definitions/Link"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"security": [
+					{
+						"api_key": []
+					}
+				]
+			}
+		},
+		"/CsEventManager/all": {
+			"get": {
+				"tags": [
+					"cs-event-manager"
+				],
 				"summary": "Returns all events in the rectangle.",
 				"operationId": "getAllInUsingGET",
 				"produces": [
 					"*/*",
-					"application/json"]
-				,
+					"application/json"
+				],
 				"parameters": [
 					{
 						"name": "left",
@@ -66,8 +111,8 @@
 						"required": true,
 						"type": "number",
 						"format": "double"
-					}]
-				,
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "OK",
@@ -87,23 +132,119 @@
 				},
 				"security": [
 					{
-						"api_key": [
-						]
-					}]
+						"api_key": []
+					}
+				]
+			}
+		},
+		"/CsEventManager/crowdsourceevent": {
+			"post": {
+				"tags": [
+					"cs-event-manager"
+				],
+				"summary": "Get correctly mapped traffic event for a list of coordinates",
+				"operationId": "crowdsourceeventUsingPOST",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"*/*",
+					"application/json"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "jsonObjectInput",
+						"description": "JSON object of time gaps with coordinates",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"security": [
+					{
+						"api_key": []
+					}
+				]
+			}
+		},
+		"/CsEventManager/event": {
+			"get": {
+				"tags": [
+					"cs-event-manager"
+				],
+				"summary": "Returns the events with the sid",
+				"operationId": "getEventUsingGET",
+				"produces": [
+					"*/*",
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "sid",
+						"in": "query",
+						"description": "sid",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/Feature"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"security": [
+					{
+						"api_key": []
+					}
+				]
 			},
 			"post": {
 				"tags": [
-					"cs-event-manager"]
-				,
+					"cs-event-manager"
+				],
 				"summary": "Collect events",
 				"operationId": "putUsingPOST",
 				"consumes": [
-					"application/json"]
-				,
+					"application/json"
+				],
 				"produces": [
 					"*/*",
-					"application/json"]
-				,
+					"application/json"
+				],
 				"parameters": [
 					{
 						"in": "body",
@@ -113,8 +254,8 @@
 						"schema": {
 							"$ref": "#/definitions/Feature"
 						}
-					}]
-				,
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "OK"
@@ -134,20 +275,20 @@
 				},
 				"security": [
 					{
-						"api_key": [
-						]
-					}]
+						"api_key": []
+					}
+				]
 			},
 			"delete": {
 				"tags": [
-					"cs-event-manager"]
-				,
+					"cs-event-manager"
+				],
 				"summary": "Delete the events with the sid",
 				"operationId": "removeUsingDELETE",
 				"produces": [
 					"*/*",
-					"application/json"]
-				,
+					"application/json"
+				],
 				"parameters": [
 					{
 						"name": "sid",
@@ -155,8 +296,8 @@
 						"description": "sid",
 						"required": false,
 						"type": "string"
-					}]
-				,
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "OK"
@@ -173,74 +314,36 @@
 				},
 				"security": [
 					{
-						"api_key": [
-						]
-					}]
-			}
-		},
-		"/CsEventManager/crowdsourceevent": {
-			"post": {
-				"tags": [
-					"cs-event-manager"]
-				,
-				"summary": "Get correctly mapped traffic event for a list of coordinates",
-				"operationId": "crowdsourceeventUsingPOST",
-				"consumes": [
-					"application/json"]
-				,
-				"produces": [
-					"*/*",
-					"application/json"]
-				,
-				"parameters": [
-					{
-						"in": "body",
-						"name": "jsonObjectInput",
-						"description": "JSON object of time gaps with coordinates",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					}]
-				,
-				"responses": {
-					"200": {
-						"description": "OK",
-						"schema": {
-							"type": "string"
-						}
-					},
-					"201": {
-						"description": "Created"
-					},
-					"401": {
-						"description": "Unauthorized"
-					},
-					"403": {
-						"description": "Forbidden"
-					},
-					"404": {
-						"description": "Not Found"
+						"api_key": []
 					}
-				},
-				"security": [
-					{
-						"api_key": [
-						]
-					}]
+				]
 			}
 		},
 		"/CsEventManager/health": {
 			"get": {
 				"tags": [
-					"health-mvc-endpoint"]
-				,
-				"summary": "invoke",
-				"operationId": "invokeUsingGET",
+					"operation-handler"
+				],
+				"summary": "handle",
+				"operationId": "handleUsingGET",
 				"produces": [
-					"application/vnd.spring-boot.actuator.v1+json",
-					"application/json"]
-				,
+					"application/json",
+					"application/vnd.spring-boot.actuator.v2+json"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"description": "body",
+						"required": false,
+						"schema": {
+							"type": "object",
+							"additionalProperties": {
+								"type": "string"
+							}
+						}
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "OK",
@@ -260,57 +363,22 @@
 				},
 				"security": [
 					{
-						"api_key": [
-						]
-					}]
-			}
-		},
-		"/CsEventManager/health.json": {
-			"get": {
-				"tags": [
-					"health-mvc-endpoint"]
-				,
-				"summary": "invoke",
-				"operationId": "invokeUsingGET_1",
-				"produces": [
-					"application/vnd.spring-boot.actuator.v1+json",
-					"application/json"]
-				,
-				"responses": {
-					"200": {
-						"description": "OK",
-						"schema": {
-							"type": "object"
-						}
-					},
-					"401": {
-						"description": "Unauthorized"
-					},
-					"403": {
-						"description": "Forbidden"
-					},
-					"404": {
-						"description": "Not Found"
+						"api_key": []
 					}
-				},
-				"security": [
-					{
-						"api_key": [
-						]
-					}]
+				]
 			}
 		},
-		"/CsEventManager/last": {
+		"/CsEventManager/lastevent": {
 			"get": {
 				"tags": [
-					"cs-event-manager"]
-				,
+					"cs-event-manager"
+				],
 				"summary": "Return the last collected event. (for debugging)",
 				"operationId": "getLastUsingGET",
 				"produces": [
 					"*/*",
-					"application/json"]
-				,
+					"application/json"
+				],
 				"responses": {
 					"200": {
 						"description": "OK",
@@ -330,53 +398,9 @@
 				},
 				"security": [
 					{
-						"api_key": [
-						]
-					}]
-			}
-		},
-		"/CsEventManager/{sid}": {
-			"get": {
-				"tags": [
-					"cs-event-manager"]
-				,
-				"summary": "Returns the events with the sid",
-				"operationId": "getLastUsingGET_1",
-				"produces": [
-					"*/*",
-					"application/json"]
-				,
-				"parameters": [
-					{
-						"name": "sid",
-						"in": "path",
-						"description": "sid",
-						"required": true,
-						"type": "string"
-					}]
-				,
-				"responses": {
-					"200": {
-						"description": "OK",
-						"schema": {
-							"$ref": "#/definitions/Feature"
-						}
-					},
-					"401": {
-						"description": "Unauthorized"
-					},
-					"403": {
-						"description": "Forbidden"
-					},
-					"404": {
-						"description": "Not Found"
+						"api_key": []
 					}
-				},
-				"security": [
-					{
-						"api_key": [
-						]
-					}]
+				]
 			}
 		}
 	},
@@ -398,7 +422,8 @@
 					"type": "string",
 					"enum": [
 						"name",
-						"link"]
+						"link"
+					]
 				}
 			},
 			"title": "Crs"
@@ -465,6 +490,25 @@
 				}
 			},
 			"title": "GeoJsonObject"
+		},
+		"Link": {
+			"type": "object",
+			"properties": {
+				"href": {
+					"type": "string"
+				},
+				"templated": {
+					"type": "boolean"
+				}
+			},
+			"title": "Link"
+		},
+		"Map«string,Link»": {
+			"type": "object",
+			"title": "Map«string,Link»",
+			"additionalProperties": {
+				"$ref": "#/definitions/Link"
+			}
 		}
 	}
 }
