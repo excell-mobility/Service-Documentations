@@ -1,1 +1,53 @@
-{"swagger": "2.0", "info": {"title": "Predictions API", "description": "", "version": ""}, "host": "dlr-integration.minglabs.com", "basePath": "/api/v1/service-request/predictionservice", "schemes": ["https"], "paths": {"/v1/dresden_pzs_lstm": {"get": {"summary": "Predictions made by TensorFlowModel", "description": "Predictions made by TensorFlowModel", "parameters": [], "responses": {"200": {"description": ""}}, "tags": ["predictionservice"], "operationId": "list"}}}, "securityDefinitions": {"basic": {"type": "basic"}}}
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "Der Prediction Service gibt aktuelle Prognosen eines trainierten Modells aus, z.B. die Messwerte an allen Sensoren in 10, 15, 30 etc. Minuten.\n\nThe prediction service returns predicted detector values from a neural network trained with historical data.\n",
+		"version": "1.0",
+		"title": "ExCELL Prediction API",
+		"contact": {
+			"name": "Beuth Hochschule für Technik Berlin - Labor für Rechner- und Informationssysteme - MAGDa Gruppe",
+			"url": "https://projekt.beuth-hochschule.de/magda/poeple",
+			"email": "fkunde@beuth-hochschule"
+		},
+	},
+	"host": "dlr-integration.minglabs.com",
+	"basePath": "/api/v1/service-request/predictionservice",
+	"schemes": ["https"],
+	"paths": {
+		"/v1/dresden_pzs_lstm": {
+			"get": {
+				"summary": "Predictions made by TensorFlow model",
+				"description": "Predictions made by TensorFlow model",
+				"parameters": [],
+                "produces": ["application/json",
+				"*/*"],
+				"responses": {
+					"200": {
+						"description": ""
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"tags": ["predictionservice"],
+				"operationId": "list",
+                "security": [{
+					"api_key": []
+				}]
+			}
+		}
+	},
+	"securityDefinitions": {
+		"api_key": {
+			"type": "apiKey",
+			"name": "Authorization",
+			"in": "header"
+		}
+	}
+}
