@@ -10,8 +10,8 @@
 			"email": "fkunde@beuth-hochschule"
 		},
 	},
-	"host": "dlr-integration.minglabs.com",
-	"basePath": "/api/v1/service-request/predictionservice",
+	"host": "excell-mobility.de",
+	"basePath": "/integration/api/v1/service-request/predictionservice",
 	"schemes": ["https"],
 	"paths": {
 		"/v1/dresden_pzs_lstm": {

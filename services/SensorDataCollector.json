@@ -10,8 +10,8 @@
 			"email": "henning.jeske@tu-dresden.de"
 		}
 	},
-	"host": "dlr-integration.minglabs.com",
-	"basePath": "/api/v1/service-request/sensordatacollector",
+	"host": "excell-mobility.de",
+	"basePath": "/integration/api/v1/service-request/sensordatacollector",
 	"tags": [
 		{
 			"name": "health-mvc-endpoint",

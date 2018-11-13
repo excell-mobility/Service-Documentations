@@ -12,10 +12,10 @@ info:
     Zum Beispiel kann die Anzahl an Requests zu den verschiedenen Services innerhalb einer gewissen
     Periode aufgerufen werden. Des weiteren können die momentanen Berechtigungen eingesehen werden.
   version: 1.0.0
-host: 'dlr-integration.minglabs.com'
+host: 'excell-mobility.de'
 schemes:
   - https
-basePath: /api/v1
+basePath: /integration/api/v1
 produces:
   - application/json
 paths:
